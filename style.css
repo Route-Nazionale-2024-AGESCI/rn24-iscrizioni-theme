@@ -1,0 +1,184 @@
+/*
+Theme Name:   RN24 Iscrizioni
+Theme URI:    https://rn24.agesci.it
+Description:  Tema per iscrizioni Route Nazionale 2024
+Author:       AGESCI
+Author URI:   https://rn24.agesci.it
+Version:      1.0.0
+License:      GNU General Public License v2 or later
+License URI:  http://www.gnu.org/licenses/gpl-2.0.html
+Tags:         light, dark, two-columns, right-sidebar, responsive-layout, accessibility-ready
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,600;0,900;1,300&display=swap');
+
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+* {
+    font-family: 'Montserrat', sans-serif !important;
+}
+h1, h2, h3, h4 {
+    font-family: 'Montserrat', sans-serif !important;
+}
+h1.page-title {
+    font-weight: 900;
+    text-align: center;
+}
+nav.navbar.main-navbar {
+    background: #6D5095;
+    min-height: 40px;
+}
+img.rn-logo {
+    height: 70px;
+    margin: 20px 0;
+}
+nav.navbar.navbar-expand-lg.sub-navbar {
+    color: black;
+}
+.page-content {
+    text-align: center;
+    margin: 30px;
+}
+
+div#navbarSupportedContent ul.navbar-nav.mr-auto,
+div#navbarSupportedContent .menu-main-menu-container {
+    width: 100%;
+}
+
+ul#menu-main-menu {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    list-style: none;
+}
+ul#menu-main-menu li {
+    font-family: Montserrat;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin: 15px;
+}
+
+ul#menu-main-menu li a {
+    color: #2B2D2B;
+    text-transform: uppercase;
+}
+
+ul#menu-main-menu li a:HOVER {
+    color: #000;
+}
+
+footer.footer.mt-auto.py-3.bg-dark {
+    background: #2B2D2B !important;
+    color: white;
+}
+p.follow-us-pre {
+    /* font-family: 'Montserrat', sans-serif !important; */
+    font-size: 1em;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin: 15px 0 10px;
+}
+.footer-row {
+    height: 1px;
+    background: white;
+    width: 100%;
+    margin: 5px 0 10px;
+    opacity: 0.5;
+}
+img.rn-logo-footer {
+    height: 50px;
+    margin: 5px 0;
+}
+span.footer-copy {
+    font-size: 14px;
+    opacity: 0.6;
+}
+ul#menu-footer-menu {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+ul#menu-footer-menu li {
+    margin-left: 20px;
+}
+ul#menu-footer-menu li a {
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+}
+p.follow-us-pre {
+    font-size: 14px;
+    font-style: normal;
+    line-height: normal;
+    margin: 0 0 10px;
+}
+img.social-link-footer {
+    width: 25px;
+    display: inline-block;
+    margin-left: 10px;
+    margin-bottom: 20px;
+}
+
+img.agesci-link {
+    height: 35px;
+}
+a.navbar-brand.smallest {
+    line-height: 1em;
+    padding: 0;
+}
+
+
+span.select2.select2-container {
+    width: 80% !important;
+    max-width: 500px !important;
+    display: block;
+    margin: 0 auto;
+}
+.select2-container .select2-selection--single {
+    border-radius: 8px;
+    display: flex;
+    padding: 5px 16px;
+    align-items: center;
+    gap: 10px;
+    align-self: stretch;
+    min-height: 40px !important;
+}
+form.rn24SignupForm label {
+    font-weight: 600;
+    text-align: left;
+    width: 80%;
+    max-width: 500px !important;
+}
+input#email {
+    width: 80% !important;
+    margin: 0 auto;
+    max-width: 500px !important;
+}
+.rn24SignupForm .btn.btn-primary {
+    display: flex;
+    padding: 12px 20px;
+    align-items: flex-start;
+    gap: 10px;
+    border-radius: 8px;
+    border: 2px solid #000;
+    background: var(--color-white, #FFF);
+    color: black;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin: 40px auto 80px;
+}
+
+select#regione, select#gruppo {
+    position: absolute;
+    left: -10000px;
+}
