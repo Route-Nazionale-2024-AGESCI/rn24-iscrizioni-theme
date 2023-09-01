@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title><?php echo get_bloginfo('name'); ?></title>
   <link rel="stylesheet" href="<?php echo get_bloginfo('template_directory'); ?>/css/bootstrap.min.css">
+  <link rel="stylesheet" href="<?php echo get_bloginfo('template_directory'); ?>/css/selectize.default.min.css">
   <link rel="stylesheet" href="<?php echo get_bloginfo('template_directory'); ?>/style.css">
   <?php wp_head(); ?>
 </head>
@@ -14,10 +15,20 @@
 <header>
   <nav class="navbar navbar-expand-lg main-navbar">
     <div class="container">
-    <a class="navbar-brand smallest" target="_blank" href="https://www.agesci.it">
+      <a class="navbar-brand smallest" target="_blank" href="https://www.agesci.it">
               <img src="<?php echo get_bloginfo('template_directory'); ?>/img/logo-Agesci-bianco.png" 
                 class="agesci-link" alt="AGESCI">
             </a>
+            <span class="navbar-follow-us-links">
+            <a href="https://facebook.com/agesci.routenazionale2024" target="_blank">
+              <img src="<?php echo get_bloginfo('template_directory'); ?>/img/facebook-f.svg" 
+                class="social-link-header" alt="Facebook RN24">
+            </a>
+            <a href="https://instagram.com/agesci.routenazionale2024" target="_blank">
+              <img src="<?php echo get_bloginfo('template_directory'); ?>/img/instagram.svg" 
+                  class="social-link-header" alt="Instagram RN24">
+            </a>
+          </span>
     </div>
 
   </nav>

@@ -182,3 +182,28 @@ select#regione, select#gruppo {
     position: absolute;
     left: -10000px;
 }
+
+img.social-link-header {
+    width: 20px;
+    margin: 0 0 0 15px;
+}
+img.social-link-header:HOVER {
+    opacity: 0.7;
+}
+.event-wrapper {
+    margin-top: 30px;
+}
+.event-header ul {
+    margin: 0;
+}
+
+.event-header {
+    background: #fdf6b2;
+    color: #8e4b10;
+    border-color: #8e4b10;
+    border-width: 0;
+    border-left-width: 4px;
+    padding: 15px;
+    margin-bottom: 30px;
+    border-style: solid;
+}
