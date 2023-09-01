@@ -162,21 +162,6 @@ input#email {
     margin: 0 auto;
     max-width: 500px !important;
 }
-.rn24SignupForm .btn.btn-primary {
-    display: flex;
-    padding: 12px 20px;
-    align-items: flex-start;
-    gap: 10px;
-    border-radius: 8px;
-    border: 2px solid #000;
-    background: var(--color-white, #FFF);
-    color: black;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
-    margin: 40px auto 80px;
-}
 
 select#regione, select#gruppo {
     position: absolute;
@@ -206,4 +191,77 @@ img.social-link-header:HOVER {
     padding: 15px;
     margin-bottom: 30px;
     border-style: solid;
+}
+
+form#rn24_loginform {
+    max-width: 500px;
+    margin: 50px auto;
+}
+
+form#rn24_loginform label {
+    font-weight: 600;
+    text-align: left;
+    width: 100%;
+    max-width: 500px !important;
+}
+
+.btn.btn-primary,
+.em-booking-submit {
+    display: flex;
+    padding: 12px 20px;
+    align-items: flex-start;
+    gap: 10px;
+    border-radius: 8px;
+    border: 2px solid #000;
+    background: var(--color-white, #FFF);
+    color: black;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin: 40px auto 80px;
+}
+
+span.logged-user-name {
+    display: block;
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+}
+span.logged-user-email {
+    display: block;
+    color: white;
+    /* font-weight: 600; */
+    font-size: 12px;
+}
+
+.navbar-left {
+    display: flex;
+}
+a.btn-link:hover {
+    text-decoration: none;
+    opacity: 0.7;
+}
+
+section.em-event-bookings-meta {
+    display: none;
+}
+h3.em-booking-section-title.em-booking-form-tickets-title {
+    display: none;
+}
+.em-ticket.em-ticket-2 {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.em-booking-section.em-booking-form-buttons.em-booking-buttons {
+    text-align: center;
+}
+input.em-form-submit.em-booking-submit.em-button.em-button-1 {
+    margin: 30px auto 80px !important;
+}
+
+p.em-tickets-spaces {
+    width: 50%;
+    max-width: 200px;
 }

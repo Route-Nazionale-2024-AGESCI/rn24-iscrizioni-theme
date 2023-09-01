@@ -20,10 +20,10 @@
       </div><!-- .row -->
       <div class="footer-row"></div>
       <div class="row">
-        <div class="col">
+        <div class="col-md-6 col-12 mb-2 mb-md-0">
           <span class="footer-copy">&copy; AGESCI Associazione Guide e Scouts Cattolici Italiani</span>
         </div>
-        <div class="col">
+        <div class="col-md-6 col-12">
           <ul class="navbar-nav mr-auto footer-menu">
             <?php if (has_nav_menu('footer-menu')) {
               wp_nav_menu(array('theme_location' => 'footer-menu'));
