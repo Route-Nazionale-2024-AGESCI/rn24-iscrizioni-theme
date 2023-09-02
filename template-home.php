@@ -1,13 +1,18 @@
-<?php get_header(); ?>
+<?php /* Template Name: Home */
+if (is_user_logged_in() && get_permalink() == home_url('/')) {
+	wp_redirect(site_url('inizia'));
+	exit();
+}
+get_header(); ?>
 
-  <main>
+<main>
     <div class="container single-page">
 
       <div class="row">
         <section class="col">
-          <?php while ( have_posts() ) : the_post(); global $post; ?>
+          <?php while ( have_posts() ) : the_post(); ?>
 
-            <article class="<?php echo $post->post_name;?>">
+            <article>
               <h1 class="page-title"><?php the_title(); ?></h1>
 
               <div class="page-content">

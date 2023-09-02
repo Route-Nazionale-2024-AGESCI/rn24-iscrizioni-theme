@@ -28,7 +28,7 @@ get_header(); ?>
                         'remember' => false
                     );
                     rn24_wp_login_form( $args );
-                } else {
+                  } else {
                     global $current_user;
                     wp_get_current_user();
                   ?>

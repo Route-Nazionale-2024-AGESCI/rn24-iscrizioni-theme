@@ -118,6 +118,7 @@ function rn24_wp_login_form($args = array()) {
 			esc_url( $args['redirect'] )
 		)
 		.
+		'<a href="'.wp_lostpassword_url().'" class="lost-password-url">Hai dimenticato la password?</a>'.
 		'</form>';
     if ( $args['echo'] ) {
       echo $form;
@@ -131,23 +132,23 @@ function rn24_wp_login_form($args = array()) {
  */
 add_shortcode('rn24_signup_btn', 'rn24_show_signup_btn');
 function rn24_show_signup_btn($atts, $content = null, $tag = '') {
-  // override default attributes with user attributes
 	$_atts = shortcode_atts(
 		array(
-			'page_iscrizioni' => 'iscriviti',
-      'page_evento' => 'eventi/rn24'
+			'page_iscrizioni' => '/iscriviti',
+      		'page_evento' => '/eventi/rn24'
 		), $atts, $tag
 	);
-  if (is_user_logged_in())
-    return sprintf(
-			'<a class="btn-link" href="%1$s"><button class="btn btn-primary">Iscrivi la tua Comunità Capi</button></a>',
-			esc_attr( $_atts['page_evento'] )
-		);
-  else
-  return sprintf(
-    '<a class="btn-link" href="%1$s"><button class="btn btn-primary">Iscrivi la tua Comunità Capi</button></a>',
-    esc_attr( $_atts['page_iscrizioni'] )
-  );
+  if (is_user_logged_in()) {
+	return sprintf(
+		'<a class="btn-link" href="%1$s"><button class="btn btn-primary">Iscrivi la tua Comunità Capi</button></a>',
+		esc_attr( $_atts['page_evento'] )
+	);
+  } else {
+	return sprintf(
+		'<a class="btn-link" href="%1$s"><button class="btn btn-primary">Iscrivi la tua Comunità Capi</button></a>',
+		esc_attr( $_atts['page_iscrizioni'] )
+	  );
+  }
 }
 
 /**
@@ -166,4 +167,33 @@ add_action( 'login_form_lostpassword', 'rn24_lost_password_page' );
 function rn24_lost_password_page() {
 	wp_safe_redirect(site_url( 'recupera-password' ));
 	exit();
+}
+
+/**
+ * Prepare RN24 registration email
+ */
+function wpse27856_set_content_type(){
+    return "text/html";
+}
+add_filter( 'wp_mail_content_type','wpse27856_set_content_type' );
+
+function prepare_email_base($template) {
+	ob_start();
+	include(get_template_directory().'/email/'.$template.'.email.php');
+	$output = ob_get_contents();
+	ob_end_clean();
+	$output = str_replace("[RN24_BASE_URL]", site_url(), $output);
+	$output = str_replace("[RN24_THEME_URL]", get_bloginfo('template_directory'), $output);
+	return $output;
+}
+
+/**
+ * Build template email for registration purpose
+ */
+function prepare_registration_email($username, $groupName, $password) {
+	$output = prepare_email_base('registration');
+	$output = str_replace("[RN24_GRUPPO]", $groupName, $output);
+	$output = str_replace("[RN24_EMAIL]", $username, $output);
+	$output = str_replace("[RN24_PASSWORD]", $password, $output);
+	return $output;
 }

@@ -23,6 +23,9 @@ html, body {
 h1, h2, h3, h4 {
     font-family: 'Montserrat', sans-serif !important;
 }
+a {
+    color: rebeccapurple;
+}
 h1.page-title {
     font-weight: 900;
     text-align: center;
@@ -281,4 +284,31 @@ a.logout-btn-login.btn.btn-primary {
     width: 120px;
     text-align: center;
     justify-content: center;
+}
+
+form#rn24_loginform .btn {
+    margin-bottom: 40px;
+}
+.page-content ul {
+    text-align: left;
+}
+.page-content ul li {
+    margin: 10px 0;
+}
+
+.container.single-page article {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+article.inizia .page-content ul {
+    text-align: left;
+    background: #fdf6b2;
+    color: #8e4b10;
+    border-color: #8e4b10;
+    border-width: 0;
+    border-left-width: 4px;
+    padding: 15px 15px 15px 40px;
+    margin-bottom: 30px;
+    border-style: solid;
 }
