@@ -54,7 +54,7 @@ function rn24_redirect_login_page() {
   $login_url  = home_url( '/login' );
   $url = basename($_SERVER['REQUEST_URI']); // get requested URL
   isset( $_REQUEST['redirect_to'] ) ? ( $url   = "wp-login.php" ): 0; // if users ssend request to wp-admin
-  if( $url  == "wp-login.php" && $_SERVER['REQUEST_METHOD'] == 'GET')  {
+  if( $url  == "wp-login.php" && $_SERVER['REQUEST_METHOD'] == 'GET' && !(isset($_GET['action']) && isset($_GET['action']) == 'logout'))  {
       wp_redirect( $login_url );
       exit;
   }
@@ -148,4 +148,22 @@ function rn24_show_signup_btn($atts, $content = null, $tag = '') {
     '<a class="btn-link" href="%1$s"><button class="btn btn-primary">Iscrivi la tua Comunità Capi</button></a>',
     esc_attr( $_atts['page_iscrizioni'] )
   );
+}
+
+/**
+ * Redicrect automatica alla homepage dopo il logout
+ */
+add_action('wp_logout','auto_redirect_after_logout');
+function auto_redirect_after_logout(){
+  wp_safe_redirect( home_url() );
+  exit;
+}
+
+/**
+ * Pagina personalizzata per recupera password
+ */
+add_action( 'login_form_lostpassword', 'rn24_lost_password_page' );
+function rn24_lost_password_page() {
+	wp_safe_redirect(site_url( 'recupera-password' ));
+	exit();
 }

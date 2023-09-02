@@ -265,3 +265,20 @@ p.em-tickets-spaces {
     width: 50%;
     max-width: 200px;
 }
+
+.logged-user {
+    display: flex;
+    align-items: center;
+}
+
+a.logout-btn {
+    color: #feffc9;
+    font-weight: 600;
+    margin-left: 30px;
+}
+
+a.logout-btn-login.btn.btn-primary {
+    width: 120px;
+    text-align: center;
+    justify-content: center;
+}

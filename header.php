@@ -30,6 +30,7 @@
                             <span class="logged-user-email"><?php echo $current_user->user_email; ?></span>
                           </li>
                       </ul>
+                      <a class="logout-btn" href="<?php echo wp_logout_url( home_url() ); ?>" title="Logout">Logout</a>
                     </div>
                       <?php } ?> 
       </div>

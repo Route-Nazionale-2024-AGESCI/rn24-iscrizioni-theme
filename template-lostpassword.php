@@ -1,4 +1,4 @@
-<?php /* Template Name: Login */
+<?php /* Template Name: Lost Password */
 get_header(); ?>
 
   <main>
@@ -9,7 +9,7 @@ get_header(); ?>
           <?php while ( have_posts() ) : the_post(); ?>
 
             <article>
-              <h1 class="page-title">Accedi</h1>
+              <h1 class="page-title">Recupera password</h1>
 
               <div class="page-content">
               
