@@ -20,7 +20,7 @@ $(document).ready(function() {
         }
     });
 
-
+    $('button.em-tooltip-ddm.em-clickable.input.button-secondary').text('Azioni');
 
     $('input.em-form-submit.em-booking-submit').click(function(e) {
         e.preventDefault();
