@@ -35,12 +35,27 @@
   </footer>
 
   
-
-  <script src="<?php echo get_bloginfo('template_directory'); ?>/js/jquery-3.2.1.slim.min.js"></script>
+  <div class="modal" tabindex="-1" id="confirm-dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title"></h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <p></p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary cancel" data-bs-dismiss="modal">Chiudi</button>
+            <button type="button" class="btn btn-primary save">Salva</button>
+        </div>
+        </div>
+    </div>
+</div>
   <script src="<?php echo get_bloginfo('template_directory'); ?>/js/bootstrap.min.js"></script>
   <script src="<?php echo get_bloginfo('template_directory'); ?>/js/selectize.min.js"></script>
   <script src="<?php echo get_bloginfo('template_directory'); ?>/js/app.js"></script>
   <?php wp_footer(); ?>
-  
+
 </body>
 </html>

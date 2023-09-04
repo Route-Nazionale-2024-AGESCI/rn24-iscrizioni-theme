@@ -10,6 +10,14 @@ function register_my_menus() {
 }
 add_action( 'init', 'register_my_menus' );
 
+
+function load_jquery() {
+    if ( ! wp_script_is( 'jquery', 'enqueued' )) {
+        wp_enqueue_script( 'jquery' );
+    }
+}
+add_action( 'wp_enqueue_scripts', 'load_jquery' );
+
 function rn24_support() {
 
   // Add support for block styles.
@@ -134,8 +142,13 @@ add_action( 'wp_login_failed', 'rn24_front_end_login_fail' );
 function rn24_front_end_login_fail( $username ) {
    $referrer = $_SERVER['HTTP_REFERER'];
    if ( !empty($referrer) && !strstr($referrer, 'wp-login') && !strstr($referrer, 'wp-admin') ) {
-      wp_redirect( $referrer . '?error-login=true' );
-      exit;
+		if (str_contains($referrer, '?')) {
+			wp_redirect( $referrer . '&error-login=true' );
+			exit;
+		} else {
+			wp_redirect( $referrer . '?error-login=true' );
+			exit;
+		}
    }
 }
 
@@ -235,3 +248,8 @@ function rn24_dbem_bookings_email_pending_body($content) {
 	}
 	return $content;
 }
+
+/**
+ * Disable WordPress sends email for password update
+ */
+add_filter( 'send_password_change_email', '__return_false' );

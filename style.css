@@ -111,6 +111,7 @@ ul#menu-footer-menu {
 }
 ul#menu-footer-menu li {
     margin-left: 20px;
+    text-align: center;
 }
 ul#menu-footer-menu li a {
     color: white;
@@ -210,6 +211,7 @@ form#rn24_loginform label {
 }
 
 .btn.btn-primary,
+.em.pixelbones .input input[type=submit],
 .em-booking-submit {
     display: flex;
     padding: 12px 20px;
@@ -313,4 +315,48 @@ article.inizia .page-content ul {
     padding: 15px 15px 15px 40px;
     margin-bottom: 30px;
     border-style: solid;
+}
+
+.form-group label {
+	font-size: 14px !important
+}
+
+.form-group .form-control {
+	border-color: #6D5095 !important;
+	border-radius: 0.5rem !important;
+}
+
+.form-group .selection .select2-selection {
+		border-color: #6D5095 !important;
+	border-radius: 0.5rem !important;
+	text-align: left !important;
+	padding: 0.35rem 0.5rem !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+	height: 40px !important;
+	right: 12px !important;
+}
+
+.em-booking-section .input {
+	border-radius: 0.5rem !important;
+	border-color: #6D5095 !important;
+	padding: 0.75rem 1rem !important
+}
+
+button.btn.btn-primary.save {
+    margin: 0;
+}
+button.btn.btn-secondary {
+    display: flex;
+    padding: 12px 20px;
+    align-items: flex-start;
+    gap: 10px;
+    border-radius: 8px;
+    border: 2px solid #848484;
+    background: var(--color-white, #FFF);
+    color: #848484;
+    font-size: 16px;
+    font-style: normal;
+    line-height: normal;
 }

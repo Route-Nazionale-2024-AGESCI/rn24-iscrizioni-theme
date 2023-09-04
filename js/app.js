@@ -18,5 +18,24 @@ $(document).ready(function() {
         } else {
             return
         }
-    })
+    });
+
+
+
+    $('input.em-form-submit.em-booking-submit').click(function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        $('#confirm-dialog .modal-title').text('Conferma prenotazione');
+        $('#confirm-dialog .modal-body p').html('Procedere con la prenotazione di <b>' +  $('#em-ticket-spaces-2').val() + '</b> posti per la tua Comunità Capi?');
+        $('#confirm-dialog').on('shown.bs.modal', function () {
+            $('#confirm-dialog .cancel').click(function() {
+                $('#confirm-dialog').modal('hide');
+            });
+            $('#confirm-dialog .save').click(function() {
+                $('#confirm-dialog').modal('hide');
+                $('.em-booking-form').submit();
+            });
+        });
+        $('#confirm-dialog').modal('toggle');
+    });
 });
