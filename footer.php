@@ -40,5 +40,7 @@
   <script src="<?php echo get_bloginfo('template_directory'); ?>/js/bootstrap.min.js"></script>
   <script src="<?php echo get_bloginfo('template_directory'); ?>/js/selectize.min.js"></script>
   <script src="<?php echo get_bloginfo('template_directory'); ?>/js/app.js"></script>
+  <?php wp_footer(); ?>
+  
 </body>
 </html>

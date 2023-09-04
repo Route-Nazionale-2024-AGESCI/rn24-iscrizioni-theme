@@ -11,7 +11,7 @@
   <link href="//rn24.agesci.it/wp-content/uploads/sites/56/2023/04/puzzle_uppercase_trasp-05.png" rel="shortcut icon" type="image/x-icon" />
   <?php wp_head(); ?>
 </head>
-<body class="d-flex flex-column h-100">
+<body class="d-flex flex-column h-100 <?php body_class(); ?>">
 
 <header>
   <nav class="navbar navbar-expand-lg main-navbar">
