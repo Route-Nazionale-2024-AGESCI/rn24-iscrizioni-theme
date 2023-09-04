@@ -47,7 +47,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary cancel" data-bs-dismiss="modal">Chiudi</button>
-            <button type="button" class="btn btn-primary save">Salva</button>
+            <button type="button" class="btn btn-primary save">Invia</button>
         </div>
         </div>
     </div>

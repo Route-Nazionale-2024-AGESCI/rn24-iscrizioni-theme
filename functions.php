@@ -236,18 +236,6 @@ function prepare_recover_password_email($username, $groupName, $key) {
 	return $output;
 }
 
-/**
- * Sends the event manager confirmation email
- */
-add_filter( 'option_dbem_bookings_email_pending_body', 'rn24_dbem_bookings_email_pending_body');
-function rn24_dbem_bookings_email_pending_body($content) {
-	if (!str_starts_with($content, "<!DOCTYPE HTML")) {
-		$output = prepare_email_base('empty');
-		$output = str_replace("[RN24_TITLE]", 'Conferma prenotazione', $output);
-		$content = str_replace("[RN24_BODY]", $content, $output);
-	}
-	return $content;
-}
 
 /**
  * Disable WordPress sends email for password update
