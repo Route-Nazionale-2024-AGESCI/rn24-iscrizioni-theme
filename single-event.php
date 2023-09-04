@@ -3,6 +3,7 @@ if (!is_user_logged_in()) {
 	wp_redirect(site_url('/login'));
 	exit();
 }
+global $EM_Booking;
 get_header(); ?>
 
   <main>
@@ -14,14 +15,20 @@ get_header(); ?>
 
             <div class="event-wrapper">
                     <?php 
-                        if (is_active_sidebar('banner_evento')) { ?>
+                    if (empty($EM_Booking) || empty($EM_Booking->booking_id)) {
+                      if (is_active_sidebar('banner_evento')) { ?>
                         <div class="event-header"><?php
                             dynamic_sidebar( 'banner_evento' );
                         ?>
                         </div>
                         <?php }
-                    ?>
-                <?php the_content(); ?>
+                         the_content();
+                    } else { ?>
+                <div class="alert alert-success" role="alert">
+                      <h4 class="alert-heading">Prenotazione effettuata con successo!</h4>
+                      <p class="mb-0">Verifica la casella e-mail istituzionale per procedere con il pagamento</p>
+                  </div>
+                <?php }  ?>
             </div>
           </article>
         </section>

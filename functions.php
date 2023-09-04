@@ -245,4 +245,3 @@ add_filter( 'send_email_change_email', '__return_false' );
 add_filter( 'wp_send_new_user_notification_to_user', '__return_false' );
 add_filter( 'wp_send_new_user_notification_to_admin', '__return_false' );
 
-
