@@ -196,11 +196,12 @@ img.social-link-header:HOVER {
     border-style: solid;
 }
 
+form#form-reset-pwd,
 form#rn24_loginform {
     max-width: 500px;
     margin: 50px auto;
 }
-
+form#form-reset-pwd label,
 form#rn24_loginform label {
     font-weight: 600;
     text-align: left;
@@ -286,6 +287,7 @@ a.logout-btn-login.btn.btn-primary {
     justify-content: center;
 }
 
+form#form-reset-pwd .btn,
 form#rn24_loginform .btn {
     margin-bottom: 40px;
 }

@@ -6,4 +6,17 @@ $(document).ready(function() {
         $('.em-bs-cell-qty').text(places);
         $('.em-bs-cell-price').text('€' + (places * price));
     });
+
+
+    $('form#form-reset-pwd').submit(function(e) {
+        $('form#form-reset-pwd .invalid-feedback').hide();
+        var pwd = $('#password').val();
+        var pwdRepeat = $('#repeat-password').val();
+        if (pwd !== pwdRepeat) {
+            $('form#form-reset-pwd #repeat-password .invalid-feedback').show();
+            return false;
+        } else {
+            return
+        }
+    })
 });

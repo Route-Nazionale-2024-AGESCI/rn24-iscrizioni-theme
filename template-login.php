@@ -12,11 +12,15 @@ get_header(); ?>
               <h1 class="page-title">Accedi</h1>
 
               <div class="page-content">
-              
                 <?php
                 if ( ! is_user_logged_in() ) { ?>
                 <p class="has-text-align-center">Per accedere utilizza l'indirizzo <b>e-mail istituzionale</b>
               e la password ricevuta in fase di registrazione</p>
+                  <?php if (isset($_GET['error-login'])) { ?>
+                  <div class="alert alert-danger" role="alert">
+                    Le credenziali inserite non sono corrette
+                  </div>
+                  <?php } ?>
                   <?php
                     $args = array (
                         'redirect' => site_url(),

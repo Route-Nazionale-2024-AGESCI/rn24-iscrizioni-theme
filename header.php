@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="<?php echo get_bloginfo('template_directory'); ?>/css/bootstrap.min.css">
   <link rel="stylesheet" href="<?php echo get_bloginfo('template_directory'); ?>/css/selectize.default.min.css">
   <link rel="stylesheet" href="<?php echo get_bloginfo('template_directory'); ?>/style.css">
+  <link href="//rn24.agesci.it/wp-content/uploads/sites/56/2023/04/puzzle_uppercase_trasp-05.png" rel="shortcut icon" type="image/x-icon" />
   <?php wp_head(); ?>
 </head>
 <body class="d-flex flex-column h-100">

@@ -195,7 +195,7 @@
 											<td style="overflow-wrap:break-word;word-break:break-word;padding:30px 20px 20px;font-family:'Montserrat',sans-serif;" align="left">
 
 												<div style="color: #333333; line-height: 120%; text-align: left; word-wrap: break-word;">
-													<p style="font-size: 14px; line-height: 120%; text-align: center;"><strong><span style="font-size: 24px; line-height: 28.8px;">Route Nazionale delle Comunità Capi 2024</span></strong></p>
+													<p style="font-size: 14px; line-height: 120%; text-align: center;"><strong><span style="font-size: 24px; line-height: 28.8px;">[RN24_TITLE]</span></strong></p>
 												</div>
 
 											</td>

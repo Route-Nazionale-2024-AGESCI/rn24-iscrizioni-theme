@@ -69,7 +69,7 @@ function rn24_wp_login_form($args = array()) {
   $defaults = array(
 		'echo'           => true,
 		// Default 'redirect' value takes the user back to the request URI.
-		'redirect'       => ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
+		'redirect'       => site_url(),
 		'form_id'        => 'loginform',
 		'label_username' => __( 'Username or Email Address' ),
 		'label_password' => __( 'Password' ),
@@ -125,6 +125,18 @@ function rn24_wp_login_form($args = array()) {
     } else {
       return $form;
     }
+}
+
+/**
+ * Handle login failed login
+ */
+add_action( 'wp_login_failed', 'rn24_front_end_login_fail' );
+function rn24_front_end_login_fail( $username ) {
+   $referrer = $_SERVER['HTTP_REFERER'];
+   if ( !empty($referrer) && !strstr($referrer, 'wp-login') && !strstr($referrer, 'wp-admin') ) {
+      wp_redirect( $referrer . '?error-login=true' );
+      exit;
+   }
 }
 
 /**
@@ -192,8 +204,34 @@ function prepare_email_base($template) {
  */
 function prepare_registration_email($username, $groupName, $password) {
 	$output = prepare_email_base('registration');
+	$output = str_replace("[RN24_TITLE]", 'Registrazione', $output);
 	$output = str_replace("[RN24_GRUPPO]", $groupName, $output);
 	$output = str_replace("[RN24_EMAIL]", $username, $output);
 	$output = str_replace("[RN24_PASSWORD]", $password, $output);
 	return $output;
+}
+
+/**
+ * Build template email for recover password purpose
+ */
+function prepare_recover_password_email($username, $groupName, $key) {
+	$output = prepare_email_base('recover-password');
+	$output = str_replace("[RN24_TITLE]", 'Recupera password', $output);
+	$output = str_replace("[RN24_GRUPPO]", $groupName, $output);
+	$output = str_replace("[RN24_EMAIL]", $username, $output);
+	$output = str_replace("[RN24_RESET_KEY]", $key, $output);
+	return $output;
+}
+
+/**
+ * Sends the event manager confirmation email
+ */
+add_filter( 'option_dbem_bookings_email_pending_body', 'rn24_dbem_bookings_email_pending_body');
+function rn24_dbem_bookings_email_pending_body($content) {
+	if (!str_starts_with($content, "<!DOCTYPE HTML")) {
+		$output = prepare_email_base('empty');
+		$output = str_replace("[RN24_TITLE]", 'Conferma prenotazione', $output);
+		$content = str_replace("[RN24_BODY]", $content, $output);
+	}
+	return $content;
 }
