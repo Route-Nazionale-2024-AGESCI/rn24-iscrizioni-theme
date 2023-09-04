@@ -10,7 +10,7 @@ if (isset($_POST['username'])) {
     // Send password reset email to the user
     try {
       $template = prepare_recover_password_email($_POST['username'], get_group_denominazione_from_ordinale($user->user_login, $user->user_login), $reset_key);
-      $result = wp_mail('lorenzo.cioni@rn24.agesci.it', 'Recupera password RN24', $template);  
+      $result = wp_mail($_POST['username'], 'Recupera password RN24', $template);  
     } catch (Exception $e) {
         var_dump($e);
     }
