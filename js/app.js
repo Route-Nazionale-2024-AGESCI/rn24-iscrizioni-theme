@@ -26,7 +26,7 @@ $(document).ready(function() {
         e.preventDefault();
         e.stopPropagation();
         $('#confirm-dialog .modal-title').text('Conferma prenotazione');
-        $('#confirm-dialog .modal-body p').html('Procedere con la prenotazione di <b>' +  $('#em-ticket-spaces-2').val() + '</b> posti per la tua Comunità Capi?');
+        $('#confirm-dialog .modal-body p').html('Procedere con la prenotazione di <b>' +  $('#em-ticket-spaces-2').val() + '</b> posti per la tua Comunità capi?');
         $('#confirm-dialog').on('shown.bs.modal', function () {
             $('#confirm-dialog .cancel').click(function() {
                 $('#confirm-dialog').modal('hide');

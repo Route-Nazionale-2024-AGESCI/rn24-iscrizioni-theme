@@ -1,8 +1,8 @@
 <?php
 include('header.mail.php'); ?>
-Carissimi capi del gruppo <b>[RN24_GRUPPO]</b>,<br>
-benvenuti nella <b>Route Nazionale delle Comunit&agrave; Capi 2024</b>!<br><br>
-Per procedere effettua l'accesso con le credenziali create per il tuo gruppo.<br>
+Carissimi capi Gruppo del <b>[RN24_GRUPPO]</b>,<br>
+benvenuti nella <b>Route Nazionale delle Comunit&agrave; capi 2024</b>!<br><br>
+Per procedere effettua l'accesso con le credenziali create per il tuo Gruppo.<br>
 <p><i>Password</i>: <b>[RN24_PASSWORD]</b></p>
 <br>
 <br>
@@ -21,7 +21,7 @@ Per procedere effettua l'accesso con le credenziali create per il tuo gruppo.<br
 </table>
 <br />
 Grazie,<br />
-<i>Lo staff della Route Nazionale Comunità Capi 2024</i>
+<i>Lo staff della Route nzionale Comunità capi 2024</i>
 <br />
 <?php
 require_once('footer.mail.php');

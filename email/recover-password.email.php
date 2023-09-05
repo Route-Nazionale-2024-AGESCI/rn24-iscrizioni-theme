@@ -1,6 +1,6 @@
 <?php
 include('header.mail.php'); ?>
-Hai richiesto il reset della password per l'accesso al portale di iscrzione alla <b>Route Nazionale delle Comunit&agrave; Capi 2024</b>
+Hai richiesto il reset della password per l'accesso al portale di iscrzione alla <b>Route nazionale delle Comunit&agrave; capi 2024</b>
  per il gruppo <b>[RN24_GRUPPO]</b>.<br>
 <br>
 <br>
@@ -19,7 +19,7 @@ Hai richiesto il reset della password per l'accesso al portale di iscrzione alla
 </table>
 <br />
 Grazie,<br />
-<i>Lo staff della Route Nazionale Comunità Capi 2024</i>
+<i>Lo staff della Route nazionale Comunità capi 2024</i>
 <br />
 <?php
 require_once('footer.mail.php');
