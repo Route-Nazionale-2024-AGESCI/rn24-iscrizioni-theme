@@ -1,7 +1,7 @@
 <?php
 include('header.mail.php'); ?>
 Hai richiesto il reset della password per l'accesso al portale di iscrzione alla <b>Route nazionale delle Comunit&agrave; capi 2024</b>
- per il gruppo <b>[RN24_GRUPPO]</b>.<br>
+ per il Gruppo <b>[RN24_GRUPPO]</b>.<br>
 <br>
 <br>
 <table width="100%" cellpadding="1" cellspacing="0" border="0">
