@@ -165,12 +165,12 @@ function rn24_show_signup_btn($atts, $content = null, $tag = '') {
 	);
   if (is_user_logged_in()) {
 	return sprintf(
-		'<a class="btn-link" href="%1$s"><button class="btn btn-primary">Iscrivi la tua Comunità Capi</button></a>',
+		'<a class="btn-link" href="%1$s"><button class="btn btn-primary">Iscrivi la tua Comunità capi</button></a>',
 		esc_attr( $_atts['page_evento'] )
 	);
   } else {
 	return sprintf(
-		'<a class="btn-link" href="%1$s"><button class="btn btn-primary">Iscrivi la tua Comunità Capi</button></a>',
+		'<a class="btn-link" href="%1$s"><button class="btn btn-primary">Iscrivi la tua Comunità capi</button></a>',
 		esc_attr( $_atts['page_iscrizioni'] )
 	  );
   }
