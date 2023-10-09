@@ -63,7 +63,10 @@ function rn24_redirect_login_page() {
   $url = basename($_SERVER['REQUEST_URI']); // get requested URL
   isset( $_REQUEST['redirect_to'] ) ? ( $url   = "wp-login.php" ): 0; // if users ssend request to wp-admin
   if( $url  == "wp-login.php" && $_SERVER['REQUEST_METHOD'] == 'GET' && !(isset($_GET['action']) && isset($_GET['action']) == 'logout'))  {
-      wp_redirect( $login_url );
+	  if (isset($_GET['redirect_to'])) {
+		$login_url = esc_url( add_query_arg( 'on_success', $_GET['redirect_to'], home_url( '/login' ) ) );
+	  }
+	  wp_redirect($login_url);
       exit;
   }
 }
@@ -74,10 +77,10 @@ add_action('init', 'rn24_redirect_login_page');
  * 
  */
 function rn24_wp_login_form($args = array()) {
-  $defaults = array(
+	$redirect_url = isset($_GET['on_success']) ? $_GET['on_success'] : site_url();
+ 	$defaults = array(
 		'echo'           => true,
-		// Default 'redirect' value takes the user back to the request URI.
-		'redirect'       => site_url(),
+		'redirect'       => $redirect_url,
 		'form_id'        => 'loginform',
 		'label_username' => __( 'Username or Email Address' ),
 		'label_password' => __( 'Password' ),
@@ -93,7 +96,7 @@ function rn24_wp_login_form($args = array()) {
 		'value_remember' => false,
 	);
 	$args = wp_parse_args( $args, apply_filters( 'login_form_defaults', $defaults ) );
-  $form =
+    $form =
 		sprintf(
 			'<form name="%1$s" id="%1$s" action="%2$s" method="post">',
 			esc_attr( $args['form_id'] ),
@@ -123,7 +126,7 @@ function rn24_wp_login_form($args = array()) {
        <button type="submit" name="wp-submit" id="%1$s" class="btn btn-primary" $disabled>%2$s</button>',
 			esc_attr( $args['id_submit'] ),
 			esc_attr( $args['label_log_in'] ),
-			esc_url( $args['redirect'] )
+			esc_url( $redirect_url )
 		)
 		.
 		'<a href="'.wp_lostpassword_url().'" class="lost-password-url">Hai dimenticato la password?</a>'.
@@ -245,3 +248,29 @@ add_filter( 'send_email_change_email', '__return_false' );
 add_filter( 'wp_send_new_user_notification_to_user', '__return_false' );
 add_filter( 'wp_send_new_user_notification_to_admin', '__return_false' );
 
+// Our custom post type function
+function create_rn24_timeline_post_type() {
+	add_theme_support('post-thumbnails');
+
+    register_post_type( 'timeline',
+        array(
+            'labels' => array(
+                'name' => __( 'Evento timeline' ),
+                'singular_name' => __( 'Evento timeline' )
+            ),
+            'public' => true,
+            'has_archive' => true,
+            'rewrite' => array('slug' => 'timeline'),
+            'show_in_rest' => true,
+			'supports' => array( 
+				'title', 
+				'editor', 
+				'thumbnail', 
+				'custom-fields', 
+				'revisions' 
+			  )
+        )
+    );
+
+}
+add_action( 'init', 'create_rn24_timeline_post_type' );
