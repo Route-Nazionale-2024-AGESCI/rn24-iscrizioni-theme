@@ -1,5 +1,5 @@
-<?php /* Template Name: Home */
-get_header(); ?>
+<?php /* Template Name: Homepage */
+get_header('', array( 'logo' => 'AGESCI.svg.png' )); ?>
 
 <main>
     <div class="container single-page">
@@ -9,8 +9,6 @@ get_header(); ?>
           <?php while ( have_posts() ) : the_post(); ?>
 
             <article>
-              <h1 class="page-title"><?php the_title(); ?></h1>
-
               <div class="page-content">
               <?php the_content(); ?>
                 </div>

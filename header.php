@@ -40,7 +40,7 @@
   <nav class="navbar navbar-expand-lg sub-navbar navbar-light">
     <div class="container">
       <a class="navbar-brand" href="<?php echo get_bloginfo( 'wpurl' ); ?>">
-        <img src="<?php echo get_bloginfo('template_directory'); ?>/img/logo_rn24.png" class="rn-logo" alt="Logo RN24">
+        <img src="<?php echo get_bloginfo('template_directory'); ?>/img/<?php echo isset($args['logo']) ? $args['logo'] : 'logo_rn24.png';?>" class="rn-logo" alt="Logo RN24">
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -50,6 +50,9 @@
           <?php if (has_nav_menu('header-menu')) {
               wp_nav_menu(array('theme_location' => 'header-menu'));
             } ?>
+          <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home">
+            <a class="btn btn-primary" href="<?php echo site_url('/inizia');?>">Iscrivi la tua Co.ca.</a>
+          </li>
         </ul>
       </div>
     </div><!-- .container -->

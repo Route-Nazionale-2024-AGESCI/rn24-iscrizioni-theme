@@ -255,8 +255,8 @@ function create_rn24_timeline_post_type() {
     register_post_type( 'timeline',
         array(
             'labels' => array(
-                'name' => __( 'Evento timeline' ),
-                'singular_name' => __( 'Evento timeline' )
+                'name' => __( 'Eventi percorso' ),
+                'singular_name' => __( 'Evento percorso' )
             ),
             'public' => true,
             'has_archive' => true,
@@ -267,10 +267,14 @@ function create_rn24_timeline_post_type() {
 				'editor', 
 				'thumbnail', 
 				'custom-fields', 
-				'revisions' 
+				'revisions',
+				'excerpt'
 			  )
         )
     );
 
 }
 add_action( 'init', 'create_rn24_timeline_post_type' );
+
+add_theme_support( 'title-tag' );
+flush_rewrite_rules( false );

@@ -1,4 +1,4 @@
-<?php /* Template Name: Home */
+<?php /* Template Name: Standard */
 get_header(); ?>
 
 <main>
@@ -11,7 +11,7 @@ get_header(); ?>
             <article>
               <h1 class="page-title"><?php the_title(); ?></h1>
 
-              <div class="page-content">
+              <div class="page-content text-left">
               <?php the_content(); ?>
                 </div>
               

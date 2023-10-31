@@ -2,7 +2,7 @@
 get_header(); ?>
 
 <main>
-    <div class="container single-page">
+    <div class="container single-page timeline-page">
 
       <div class="row">
         <section class="col">
@@ -15,35 +15,56 @@ get_header(); ?>
 
                 <?php the_content(); ?>
 
-                <div class="main-timeline-2 timeline">
+                <div class="timeline-wrapper">
                 <?php 
                   $args = array(
                     'post_type' => 'timeline',
                     'posts_per_page' => -1,
-                    'orderby'        => 'event_order',
+                    'meta_key'  => 'event_fulldate',
+                    'meta_type' => 'DATE',
+                    'orderby' => 'meta_value_num',
                     'order'          => 'ASC'
                   );
                   $query = new WP_Query($args);
                   
                   if ($query->have_posts() ):
-                    $count = 0;
                     while ( $query->have_posts() ) : $query->the_post();
                     $id = get_the_ID();
                     $event_date = get_post_meta( $id, 'event_date', true );
+                    $event_year = get_post_meta( $id, 'event_year', true );
+                    $event_fulldate = get_post_meta( $id, 'event_fulldate', true );
+                    $passed = false;
+                    if (isset($event_fulldate)) {
+                      $passed = time() >= strtotime($event_fulldate);
+                    }
                     ?>
 
-                  <div class="timeline-2 <?php echo $count % 2 == 0 ? 'left' : 'right' ?>-2">
-                    <div class="card">
-                      <div class="card-img-top" style="background-image: url(<?php echo get_the_post_thumbnail_url(); ?>);"></div>
-                      <div class="card-body p-4">
-                        <h4 class="fw-bold mb-4"><?php the_title(); ?></h4>
-                        <p class="text-muted mb-4"><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $event_date; ?></p>
-                        <p class="mb-0"><?php the_content(); ?></p>
+                  <div class="timeline-card row <?php echo $passed ? 'passed' : '';?>">
+                     <div class="timeline-date d-none d-md-block col-3">
+                        <div>
+                          <p class="timeline-date-year"><?php echo $event_year; ?></p>
+                          <p class="timeline-date-month"><?php echo $event_date; ?></p>
+                        </div>
                       </div>
-                    </div>
+                      <div class="col-1 d-block d-md-none"></div>
+                      <div class="timeline-divider col-1">
+                        <img src="<?php echo get_bloginfo('template_directory'); ?>/img/Ellipse_<?php echo $passed ? 'full' : 'empty';?>.svg" alt="Ellipse">
+                      </div>
+                      <div class="d-block d-md-none timeline-top-date">
+                          <p class="timeline-date-year"><?php echo $event_year; ?> <span class="timeline-date-month"><?php echo $event_date; ?></span></p>
+                        </div>
+                      <div class="timeline-content col-md-8 col-10 row">
+                        <div class="timeline-image col-4" style="background-image: url(<?php echo get_the_post_thumbnail_url(); ?>);"></div>
+                        <div class="timeline-data col-8">
+                          <a href="<?php echo the_permalink();?>">
+                            <p class="timeline-event-title"><?php the_title(); ?></p>
+                          </a>
+                          <div class="timeline-event-abstract"><?php the_excerpt(); ?></div>
+                        </div>
+                      </div> 
                   </div>
 
-                  <?php $count++; endwhile; endif; ?>
+                  <?php endwhile; endif; ?>
                  
                 </div>
 

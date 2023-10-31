@@ -1,14 +1,13 @@
-<?php /* Template Name: Home */
-get_header(); ?>
+<?php get_header(); ?>
 
-<main>
+  <main>
     <div class="container single-page">
 
       <div class="row">
         <section class="col">
-          <?php while ( have_posts() ) : the_post(); ?>
+          <?php while ( have_posts() ) : the_post(); global $post; ?>
 
-            <article>
+            <article class="<?php echo $post->post_name;?>">
               <h1 class="page-title"><?php the_title(); ?></h1>
 
               <div class="page-content">
