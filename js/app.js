@@ -39,12 +39,80 @@ $(document).ready(function() {
         $('#confirm-dialog').modal('toggle');
     });
 
-    
+    $('.dropdown-menu a.dropdown-toggle').on('click', function(e) {
+        if (!$(this).next().hasClass('show')) {
+          $(this).parents('.dropdown-menu').first().find('.show').removeClass("show");
+        }
+        var $subMenu = $(this).next(".dropdown-menu");
+        $subMenu.toggleClass('show');
+      
+      
+        $(this).parents('li.nav-item.dropdown.show').on('hidden.bs.dropdown', function(e) {
+          $('.dropdown-submenu .show').removeClass("show");
+        });
+      
+      
+        return false;
+      });
 
-      /*$("ul.sub-menu").parent().addClass("dropdown");
-        $("ul.sub-menu").addClass("dropdown-menu");
-        $("ul#menuid li.dropdown a").addClass("dropdown-toggle");
-        $("ul.sub-menu li a").removeClass("dropdown-toggle"); 
-        $('.navbar .dropdown-toggle').append('');
-        $('a.dropdown-toggle').attr('data-toggle', 'dropdown');*/
+
+    if ($('#map').is(':visible')) {
+        // Creating map options
+        var mapOptions = {
+            center: [42.098, 12.634],
+            zoom: 6
+         };
+         
+         // Creating a map object
+         var map = new L.map('map', mapOptions);
+         
+         // Creating a Layer object
+         var layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+         
+         // Adding layer to the map
+         map.addLayer(layer);
+    }
+
+    $('.box-wrapper-container').click(function(e) {
+        if ($(this).hasClass('selected')) {
+            $('.box-wrapper-container').removeClass('selected');
+            $('.box-wrapper-container').removeClass('unselected');
+        } else {
+            $('.box-wrapper-container').addClass('unselected');
+            $(this).addClass('selected');
+            $(this).removeClass('unselected');
+        }
+    });
+
+    $('.box-map-italy .regione').on('click',function(){
+        $('.box-map-italy .regione').removeClass('selected');
+        $(this).addClass('selected'); 
+        $('span.region-details-name').text($(this).data('nome-regione'));
+        $.ajax({
+            url: rn24_ajax_object.ajaxurl,
+            type: "POST",
+            dataType: "json",
+            data: {
+                region: $(this).data('nome-regione'),
+                action: 'rn24_select_zones'
+            },
+            success: function(data){
+                $('.region-details ul').empty();
+                var tplDir = $('#template-directory-url').val();
+                for (var i = 0; i < data.length; i++) {
+                    var li = $('<li></li>');
+                    li.append('<span class="region-zone">' + data[i] + '</span>');
+                    var btn = $('<img src="' + tplDir + '/img/arrow-right.svg" class="region-zone-btn" alt="Dettaglio">');
+                    li.append(btn);
+                    $('.region-details ul').append(li);
+                }
+            },
+            error: function(error){
+                 console.log("Error:");
+                 console.log(error);
+            }
+        });
+      });
+
+    
 });

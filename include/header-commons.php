@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title><?php echo wp_title( '' ); ?> | RN24</title>
+  <title><?php echo (wp_title('', false) != NULL && wp_title('', false) != '' ? wp_title('', false) : get_bloginfo( 'name' )); ?> | RN24</title>
   <link rel="stylesheet" href="<?php echo get_bloginfo('template_directory'); ?>/css/bootstrap.min.css">
   <link rel="stylesheet" href="<?php echo get_bloginfo('template_directory'); ?>/css/selectize.default.min.css">
   <link rel="stylesheet" href="<?php echo get_bloginfo('template_directory'); ?>/css/font-awesome.min.css">
@@ -22,5 +22,7 @@
 	<meta name="twitter:title" content="Route nazionale delle Comunità capi 2024" />
 	<meta name="twitter:description" content="Narrare e condividere il cambiamento realizzato e ancora necessario. Identità e appartenenza. Riconoscerci e farci riconoscere. Comunità capi centrali e protagoniste. Dentro l’Associazione e nei territori. È un Tempo per riscoprire le ragioni della Scelta di essere educatori oggi." />
 	<meta property="twitter:image" content="<?php echo get_bloginfo('template_directory'); ?>/img/puzzle_uppercase_trasp-05.png" />
+  
+  <link rel="stylesheet" href="<?php echo get_bloginfo('template_directory'); ?>/css/leaflet.css" />
   <?php wp_head(); ?>
 </head>

@@ -48,7 +48,16 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <?php if (has_nav_menu('header-menu')) {
-              wp_nav_menu(array('theme_location' => 'header-menu'));
+            wp_nav_menu( array(
+                  'theme_location'    => 'header-menu',
+                  'depth'             => 2,
+                  'container'         => 'div',
+                  'container_class'   => 'collapse navbar-collapse',
+                  'container_id'      => 'bs-example-navbar-collapse-1',
+                  'menu_class'        => 'nav navbar-nav',
+                  'fallback_cb'       => 'WP_Bootstrap_Navwalker::fallback',
+                  'walker'            => new WP_Bootstrap_Navwalker(),
+              ) );
             } ?>
           <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home">
             <a class="btn btn-primary" href="<?php echo site_url('/inizia');?>">Iscrivi la tua Co.ca.</a>
@@ -57,4 +66,10 @@
       </div>
     </div><!-- .container -->
   </nav>
+  <!-- Breadcrumb -->
+  <!--<div class="breadcrumb">
+    <div class="container">
+      <?php get_breadcrumb(); ?>
+    </div>
+  </div>-->
 </header>

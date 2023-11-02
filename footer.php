@@ -52,8 +52,11 @@
         </div>
     </div>
 </div>
+
+  <input type="hidden" id="template-directory-url" value="<?php echo get_bloginfo('template_directory'); ?>">
   <script src="<?php echo get_bloginfo('template_directory'); ?>/js/bootstrap.min.js"></script>
   <script src="<?php echo get_bloginfo('template_directory'); ?>/js/selectize.min.js"></script>
+  <script src="<?php echo get_bloginfo('template_directory'); ?>/js/leaflet.js"></script>
   <script src="<?php echo get_bloginfo('template_directory'); ?>/js/app.js"></script>
   <?php wp_footer(); ?>
 

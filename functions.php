@@ -250,8 +250,6 @@ add_filter( 'wp_send_new_user_notification_to_admin', '__return_false' );
 
 // Our custom post type function
 function create_rn24_timeline_post_type() {
-	add_theme_support('post-thumbnails');
-
     register_post_type( 'timeline',
         array(
             'labels' => array(
@@ -275,6 +273,93 @@ function create_rn24_timeline_post_type() {
 
 }
 add_action( 'init', 'create_rn24_timeline_post_type' );
-
+add_theme_support('post-thumbnails');
 add_theme_support( 'title-tag' );
+
+
+function create_rn24_box_post_type() {
+    register_post_type( 'box',
+        array(
+            'labels' => array(
+                'name' => __( 'Scatole' ),
+                'singular_name' => __( 'Scatola' )
+            ),
+            'public' => true,
+            'has_archive' => true,
+            'rewrite' => array('slug' => 'box'),
+            'show_in_rest' => true,
+			'supports' => array( 
+				'title', 
+				'editor', 
+				'thumbnail', 
+				'custom-fields', 
+				'revisions',
+				'excerpt'
+			  )
+        )
+    );
+
+}
+add_action( 'init', 'create_rn24_box_post_type' );
+
 flush_rewrite_rules( false );
+
+/**
+ * Register Custom Navigation Walker
+ */
+function register_navwalker(){
+	require_once get_template_directory() . '/include/class-wp-bootstrap-navwalker.php';
+}
+add_action( 'after_setup_theme', 'register_navwalker' );
+
+/**
+ * Generate breadcrumbs
+ * @author CodexWorld
+ * @authorURL www.codexworld.com
+ */
+function get_breadcrumb() {
+    echo '<a href="'.home_url().'" rel="nofollow">Home</a>';
+    if (is_category() || is_single()) {
+        echo "&nbsp;&nbsp;&gt;&nbsp;&nbsp;";
+        the_category(' &bull; ');
+            if (is_single()) {
+                echo " &nbsp;&nbsp;&gt;&nbsp;&nbsp; ";
+                the_title();
+            }
+    } elseif (is_page()) {
+        echo "&nbsp;&nbsp;&gt;&nbsp;&nbsp;";
+        echo the_title();
+    } elseif (is_search()) {
+        echo "&nbsp;&nbsp;&gt;&nbsp;&nbsp;Search Results for... ";
+        echo '"<em>';
+        echo the_search_query();
+        echo '</em>"';
+    }
+}
+
+
+function get_italy_map() {
+	return  file_get_contents(get_template_directory()."/img/italy.svg");
+}
+
+function rn24_get_zones($region) {
+    $zones = array();
+    foreach (rn24_get_groups() as $data) {
+        if (strtoupper($data['Regione']) === strtoupper($region) && !in_array($data['zona'], $zones)) {
+            array_push($zones, $data['zona']);
+        }
+    }
+    return $zones;
+}
+
+function rn24_select_zones() {
+    $region = stripslashes(isset($_POST['region']) ? strtoupper($_POST['region']) : '');
+    $zones = rn24_get_zones($region);
+	sort($zones);
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode($zones);
+    wp_die();
+}
+
+add_action( 'wp_ajax_nopriv_rn24_select_zones', 'rn24_select_zones' );
+add_action( 'wp_ajax_rn24_select_zones', 'rn24_select_zones' );
