@@ -258,8 +258,10 @@ function create_rn24_timeline_post_type() {
             ),
             'public' => true,
             'has_archive' => true,
+			'menu_icon' => 'dashicons-calendar',
             'rewrite' => array('slug' => 'timeline'),
             'show_in_rest' => true,
+			'menu_position' => 6,
 			'supports' => array( 
 				'title', 
 				'editor', 
@@ -288,6 +290,8 @@ function create_rn24_box_post_type() {
             'has_archive' => true,
             'rewrite' => array('slug' => 'box'),
             'show_in_rest' => true,
+			'menu_position' => 5,
+			'menu_icon' => 'dashicons-archive',
 			'supports' => array( 
 				'title', 
 				'editor', 
@@ -363,3 +367,33 @@ function rn24_select_zones() {
 
 add_action( 'wp_ajax_nopriv_rn24_select_zones', 'rn24_select_zones' );
 add_action( 'wp_ajax_rn24_select_zones', 'rn24_select_zones' );
+
+/**
+ * FAQ
+ */
+function create_rn24_faq_post_type() {
+    register_post_type( 'faq',
+        array(
+            'labels' => array(
+                'name' => __( 'FAQ' ),
+                'singular_name' => __( 'FAQ' )
+            ),
+            'public' => true,
+            'has_archive' => true,
+			'menu_icon' => 'dashicons-megaphone',
+            'rewrite' => array('slug' => 'faq'),
+            'show_in_rest' => true,
+			'menu_position' => 7,
+			'supports' => array( 
+				'title', 
+				'editor', 
+				'thumbnail', 
+				'custom-fields', 
+				'revisions',
+				'excerpt'
+			  )
+        )
+    );
+
+}
+add_action( 'init', 'create_rn24_faq_post_type' );

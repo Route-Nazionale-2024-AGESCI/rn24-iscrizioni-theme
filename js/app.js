@@ -84,6 +84,20 @@ $(document).ready(function() {
         }
     });
 
+    $('.faq-item.row').click(function() {
+        if ($(this).hasClass('opened')) {
+            $(this).removeClass('opened');
+            $('.faq-plus', $(this)).removeClass('fa-minus-circle');
+            $('.faq-plus', $(this)).addClass('fa-plus-circle');
+        } else {
+            $('.faq-item.row').removeClass('opened');
+            $('.faq-item.row .faq-plus').removeClass('fa-minus-circle');
+            $('.faq-item.row .faq-plus').addClass('fa-plus-circle');
+            $(this).addClass('opened');
+            $('.faq-plus', $(this)).addClass('fa-minus-circle');
+        }
+    });
+
     $('.box-map-italy .regione').on('click',function(){
         $('.box-map-italy .regione').removeClass('selected');
         $(this).addClass('selected'); 
