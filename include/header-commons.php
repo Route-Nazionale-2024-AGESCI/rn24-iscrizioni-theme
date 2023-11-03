@@ -11,16 +11,16 @@
   <link rel="stylesheet" href="<?php echo get_bloginfo('template_directory'); ?>/style.css">
   <link href="<?php echo get_bloginfo('template_directory'); ?>/img/puzzle_uppercase_trasp-05.png" rel="shortcut icon" type="image/x-icon" />
   <!-- Open Graph -->
-  <meta property="og:url" content="https://rn24-iscrizioni.agesci.it/" />
+  <meta property="og:url" content="https://rn24.agesci.it/" />
   <meta property="og:type" content="website" />
-	<meta property="og:title" content="Route nazionale delle Comunità capi 2024 - Iscrizioni" />
-	<meta property="og:description" content="Narrare e condividere il cambiamento realizzato e ancora necessario. Identità e appartenenza. Riconoscerci e farci riconoscere. Comunità capi centrali e protagoniste. Dentro l’Associazione e nei territori. È un Tempo per riscoprire le ragioni della Scelta di essere educatori oggi." />
+	<meta property="og:title" content="Route nazionale delle Comunità capi 2024" />
+	<meta property="og:description" content="Narrare e condividere il cambiamento realizzato e ancora necessario. Identità e appartenenza. Riconoscerci e farci riconoscere. Comunità capi centrali e protagoniste. Dentro l'Associazione e nei territori. È un Tempo per riscoprire le ragioni della Scelta di essere educatori oggi." />
 	<meta property="og:image" content="<?php echo get_bloginfo('template_directory'); ?>/img/puzzle_uppercase_trasp-05.png" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary" />
 	<meta name="twitter:title" content="Route nazionale delle Comunità capi 2024" />
-	<meta name="twitter:description" content="Narrare e condividere il cambiamento realizzato e ancora necessario. Identità e appartenenza. Riconoscerci e farci riconoscere. Comunità capi centrali e protagoniste. Dentro l’Associazione e nei territori. È un Tempo per riscoprire le ragioni della Scelta di essere educatori oggi." />
+	<meta name="twitter:description" content="Narrare e condividere il cambiamento realizzato e ancora necessario. Identità e appartenenza. Riconoscerci e farci riconoscere. Comunità capi centrali e protagoniste. Dentro l'Associazione e nei territori. È un Tempo per riscoprire le ragioni della Scelta di essere educatori oggi." />
 	<meta property="twitter:image" content="<?php echo get_bloginfo('template_directory'); ?>/img/puzzle_uppercase_trasp-05.png" />
   
   <link rel="stylesheet" href="<?php echo get_bloginfo('template_directory'); ?>/css/leaflet.css" />

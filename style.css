@@ -482,7 +482,7 @@ ul.import-value li {
     align-items: center;
 }
 .top-image {
-    background: url(https://rn24-iscrizioni.agesci.it/wp-content/uploads/2023/10/carosello_iscrizioni_3.jpg);
+    background: url(https://rn24.agesci.it/wp-content/uploads/2023/10/carosello_iscrizioni_3.jpg);
     width: 100%;
     height: 190px;
     background-size: cover;
@@ -909,4 +909,7 @@ li.faq-item.row span.faq-title:HOVER {
 .faq-plus {
     font-size: 24px;
     color: #6D5095;
+}
+figure.wp-block-video.homepage-video {
+    margin-top: -50px;
 }
