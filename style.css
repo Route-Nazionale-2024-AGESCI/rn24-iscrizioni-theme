@@ -332,7 +332,7 @@ form#rn24_loginform .btn {
 article.inizia .page-content ul,
 .alert-banner {
     display: block;
-    padding: 15px 15px 15px 40px;
+    padding: 15px;
     flex-direction: column;
     text-align: left;
     color: #2B2D2B;
@@ -340,6 +340,10 @@ article.inizia .page-content ul,
     border-radius: 0px 8px 8px 0px;
     border-left: 4px solid var(--color-yellow, #F6AB2D);
     background: var(--color-light-yellow, #F5E7D3);
+}
+
+article.inizia .page-content ul {
+    padding: 15px 15px 15px 40px;
 }
 
 .form-group label {
@@ -911,5 +915,5 @@ li.faq-item.row span.faq-title:HOVER {
     color: #6D5095;
 }
 figure.wp-block-video.homepage-video {
-    margin-top: -50px;
+    margin-top: -20px;
 }
