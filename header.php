@@ -52,15 +52,15 @@
                   'theme_location'    => 'header-menu',
                   'depth'             => 2,
                   'container'         => 'div',
-                  'container_class'   => 'collapse navbar-collapse',
-                  'container_id'      => 'bs-example-navbar-collapse-1',
+                  //'container_class'   => 'collapse navbar-collapse',
+                  'container_id'      => 'header-menu',
                   'menu_class'        => 'nav navbar-nav',
                   'fallback_cb'       => 'WP_Bootstrap_Navwalker::fallback',
                   'walker'            => new WP_Bootstrap_Navwalker(),
               ) );
             } ?>
-          <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home">
-            <a class="btn btn-primary" href="<?php echo site_url('/inizia');?>">Iscrivi la tua Co.ca.</a>
+          <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home mt-3 mt-md-0">
+            <a class="btn btn-primary text-center text-md-left btn-iscrizioni" href="<?php echo site_url('/inizia');?>">Iscrivi la tua Co.ca.</a>
           </li>
         </ul>
       </div>

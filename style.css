@@ -345,11 +345,17 @@ article.inizia .page-content ul,
 article.inizia .page-content ul {
     padding: 15px 15px 15px 40px;
 }
-
+a.btn.btn-primary.btn-iscrizioni {
+    align-items: center;
+    justify-content: center;
+}
 .form-group label {
 	font-size: 14px !important
 }
-
+div#header-menu {
+    display: flex;
+    align-items: center;
+}
 .form-group .form-control {
 	border-color: #6D5095 !important;
 	border-radius: 0.5rem !important;
@@ -917,3 +923,15 @@ li.faq-item.row span.faq-title:HOVER {
 figure.wp-block-video.homepage-video {
     margin-top: -20px;
 }
+
+@media screen and (max-width: 576px) {
+    ul#menu-main-menu li {
+        width: 90%;
+        text-align: center;
+        margin: 5px;
+    }
+
+    ul.dropdown-menu.show {
+        border: none;
+    }
+  }

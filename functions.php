@@ -397,3 +397,22 @@ function create_rn24_faq_post_type() {
 
 }
 add_action( 'init', 'create_rn24_faq_post_type' );
+
+function create_rn24_faq_taxonomy() {
+    register_taxonomy(
+        'faq_categories',
+        'faq',
+        array(
+            'hierarchical' => true,
+            'label' => 'Tipologia FAQ',
+			'show_in_menu' => true,
+			'show_admin_column' => true,
+            'query_var' => true,
+            'rewrite' => array(
+                'slug' => 'faq_cat',
+                'with_front' => false
+            )
+        )
+    );
+}
+add_action( 'init', 'create_rn24_faq_taxonomy');
