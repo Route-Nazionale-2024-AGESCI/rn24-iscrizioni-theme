@@ -416,3 +416,74 @@ function create_rn24_faq_taxonomy() {
     );
 }
 add_action( 'init', 'create_rn24_faq_taxonomy');
+
+
+
+/*
+ * Modulo per iscrizioni Comunità Capi
+ function _get_coca_signin_form() {
+    $signupform .= <<<SIGNUPFORM
+        <form method="POST" autocomplete="off" action="" class="rn24SignupForm">
+            <div class="form-group">
+                <label for="regione">Regione</label>
+                <select id="regione" name="region" class="sl2 regione w-100" >
+                    <option value="-">Seleziona la tua regione</option>
+                    $region_value
+                    $regioni_opts
+                </select>
+                $region_error
+            </div>
+            <div class="form-group hideShowParent group" style="$hide">
+                <label for="gruppo">Gruppo</label>
+                <select id="gruppo" name="group" class="sl2 group w-100" style="width: 100%">
+                $group_value
+                </select>
+                $group_error
+            </div>
+            <div class="form-group hideShowParent email" style="$hide">
+                <label for="email">Email</label>
+                <input name="email" type="email" class="form-control w-100" id="email" aria-describedby="emailHelp" placeholder="Inserisci email" value="$email_value" disabled />
+                $email_error
+            </div>
+            <button type="submit" name="rn24-signup-submit" class="btn btn-primary" $disabled>Registrati</button>
+        </form>
+    SIGNUPFORM;
+
+    return $signupform;
+}
+
+function _get_coca_signin_success_message() {
+    return <<<SUCCESSMESSAGE
+        <div class="alert alert-success" role="alert">
+            <h4 class="alert-heading">Registrazione avvenuta con successo!</h4>
+            <p>Complimenti, la registrazione è completa.</p>
+            <hr>
+            <p class="mb-0">Verifica la casella email che hai indicato per accedere al portale.</p>
+        </div>
+    SUCCESSMESSAGE;
+}
+
+function _get_coca_signin_error_message() {
+    return <<<SUCCESSMESSAGE
+        <div class="alert alert-danger" role="alert">
+            <h4 class="alert-heading">Errore durante la Registrazione</h4>
+            <p>Siamo spiacenti, la registrazione non è completa.</p>
+            <hr>
+            <p class="mb-0">Contattaci per assistenza.</p>
+        </div>
+    SUCCESSMESSAGE;
+}
+function rn24_coca_signin_form($atts) {
+    if(is_user_logged_in())
+        return "Solo gli utenti non registrati possono vedere questa pagina";
+
+    if(isset($_GET['r24_success']))
+        return _get_coca_signin_success_message();
+
+    if(isset($_GET['r24_error']))
+        return _get_coca_signin_error_message();
+
+    return _get_coca_signin_form();
+}
+
+add_shortcode('rn24_coca_signin_form', 'rn24_coca_signin_form'); */

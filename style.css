@@ -934,4 +934,16 @@ figure.wp-block-video.homepage-video {
     ul.dropdown-menu.show {
         border: none;
     }
+    a.wp-block-button__link.wp-element-button {
+        margin: 10px 0 20px;
+    }
   }
+  h3.faq-category {
+    margin: 50px 0 20px;
+    text-align: left;
+    font-weight: bold;
+}
+p.faq-subtitle {
+    text-align: left;
+    margin: -10px 0 30px;
+}

@@ -14,13 +14,29 @@ get_header(); ?>
 
                 <?php 
                 $page = get_page_by_path( 'faq-info' );
-                echo $page->post_content; ?>
+                echo $page->post_content;
+                $terms = get_terms( array(
+                  'taxonomy'   => 'faq_categories',
+                  'hide_empty' => true
+                ) );
 
-                <ul class="faq-wrapper">
+                foreach ( $terms as $term ):?>
+                <h3 class="faq-category"><?php echo $term->name;?></h3>
+                <?php if ($term->description != null && trim($term->description) != ''):  ?>
+                  <p class="faq-subtitle"><?php echo $term->description;?></p>
+                <?php endif; ?>
+              <ul class="faq-wrapper">
                 <?php 
                   $args = array(
                     'post_type' => 'faq',
                     'posts_per_page' => -1,
+                    'tax_query' => array(
+                      array (
+                          'taxonomy' => 'faq_categories',
+                          'field' => 'slug',
+                          'terms' => $term->slug
+                      )
+                    ),
                     'orderby'   => array(
                       'date' =>'ASC'
                      )
@@ -41,6 +57,11 @@ get_header(); ?>
                   <?php endwhile; endif; ?>
                  
                   </ul>
+                <?php endforeach;
+                
+                ?>
+
+                
 
                 <div class="faq-disclaimer">
 
