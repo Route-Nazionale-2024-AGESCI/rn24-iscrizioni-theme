@@ -947,3 +947,14 @@ p.faq-subtitle {
     text-align: left;
     margin: -10px 0 30px;
 }
+.bp-quote {
+    font-family: 'Dancing Script';
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.em-booking-form-details.em-booking-section .input-name {
+    position: absolute;
+    left: -100000px;
+}
