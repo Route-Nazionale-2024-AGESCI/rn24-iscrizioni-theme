@@ -740,7 +740,7 @@ p.box-title {
     font-style: normal;
     font-weight: 900;
     line-height: normal;
-    min-height: 60px;
+    min-height: 70px
 }
 
 .box-wrapper button.btn.btn-primary {
@@ -750,10 +750,11 @@ p.box-title {
 
 .box-page-title img {
     height: 40px;
+    margin-top: 5px;
 }
 .box-page-title {
     display: flex;
-    align-items: center;
+    align-items: start;
 }
 
 .box-page-title-wrap .page-title {
@@ -769,11 +770,13 @@ p.box-title {
 }
 
 .box-map-italy {
-    padding: 0 20px;
+    padding: 0;
     box-sizing: border-box;
 }
 .box-map-italy svg {
     width: 100%;
+    display: block;
+    margin: -60px 0;
 }
 .box-map-italy svg path {
     cursor: pointer;
@@ -790,17 +793,14 @@ p.box-title {
 
   .region-details {
     border-radius: 8px;
-    background: #F5E7D3;
+    width: 100%;
     display: flex;
-    min-height: 85%;
     max-height: 85%;
-    padding: 32px;
     flex-direction: column;
     align-items: flex-start;
     gap: 24px;
     flex: 1 0 0;
     align-self: stretch;
-    margin: 20px;
     box-sizing: border-box;
 }
 
@@ -937,6 +937,16 @@ figure.wp-block-video.homepage-video {
     a.wp-block-button__link.wp-element-button {
         margin: 10px 0 20px;
     }
+    .box-map-italy {
+        padding: 0 30px;
+        margin-top: -100px;
+    }
+    
+.box-map figure.wp-block-media-text__media img {
+    width: 50%;
+    display: block;
+    margin: 0 auto 20px;
+}
   }
   h3.faq-category {
     margin: 50px 0 20px;
@@ -957,4 +967,131 @@ p.faq-subtitle {
 .em-booking-form-details.em-booking-section .input-name {
     position: absolute;
     left: -100000px;
+}
+li#menu-item-508 a span {
+    color: #c90303;
+}
+
+p.timeline-icon-category {
+    margin: -10px 0 10px -5px;
+}
+p.timeline-icon-category img {
+    width: 30px;
+}
+p.timeline-icon-category.arena24 {
+    display: none;
+}
+p.timeline-icon-category.box {
+    display: none;
+}
+
+p.page-title-icon-category {
+    margin: 0;
+    text-align: center;
+}
+p.page-title-icon-category img {
+    width: 50px;
+}
+p.page-title-icon-category.arena24 {
+    display: none;
+}
+.coca-sidebar {
+    border-radius: 8px;
+    border: 1px solid var(--color-light-purple, #E2DCEA);
+    background: var(--color-light-purple, #E2DCEA);
+    box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.05);
+    margin-bottom: 100px;
+    padding: 15px;
+    min-height: 450px;
+}
+.coca-area h1.page-title {
+    margin: 30px 0 30px;
+}
+.container.single-page.coca-area {
+    margin: 20px 0 50px;
+    width: 100% !important;
+    max-width: 100%;
+}
+
+img.agesci-aside {
+    width: 30%;
+    max-width: 200px;
+    display: block;
+    margin: 20px auto 20px;
+}
+h2.coca-name {
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    margin: 0;
+}
+h3.coca-email {
+    font-size: 12px;
+    font-weight: normal;
+    text-align: center;
+    margin: 10px 0 30px;
+    word-break: break-all;
+}
+
+.box-map.row {
+    margin-top: 40px;
+}
+p.box-details-title {
+    margin: 30px 10px;
+    font-weight: bold;
+    font-size: 20px;
+}
+.custom-file-label::after {
+    content: "Seleziona" !important;
+}
+
+ul.coca-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+ul.coca-menu li {
+    color: var(--Color-Black, #2B2D2B);
+    font-family: Montserrat;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+
+a.active li {
+    color: rebeccapurple;
+}
+
+ul.coca-menu li i {
+    margin-right: 10px;
+    font-size: 20px;
+}
+form.rn24CocaSignupForm {
+    margin-top: 30px;
+}
+img.tangram-photo-preview {
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+.box-map .wp-block-media-text {
+    margin-bottom: 25px;
+}
+
+.timeline-image.box {
+    background-color: #eddec3;
+}
+
+.box-id-339 .box-image img {
+    width: 75% !important;
+}
+.box-id-345 .box-image img {
+    width: 75% !important;
+}
+.box-id-343 .box-image img {
+    width: 70% !important;
 }

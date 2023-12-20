@@ -275,6 +275,26 @@ function create_rn24_timeline_post_type() {
 
 }
 add_action( 'init', 'create_rn24_timeline_post_type' );
+
+function create_rn24_timeline_taxonomy() {
+    register_taxonomy(
+        'timeline_categories',
+        'timeline',
+        array(
+            'hierarchical' => true,
+            'label' => 'Tipologia Evento Timeline',
+			'show_in_menu' => true,
+			'show_admin_column' => true,
+            'query_var' => true,
+            'rewrite' => array(
+                'slug' => 'timeline_cat',
+                'with_front' => false
+            )
+        )
+    );
+}
+add_action( 'init', 'create_rn24_timeline_taxonomy');
+
 add_theme_support('post-thumbnails');
 add_theme_support( 'title-tag' );
 
@@ -421,33 +441,59 @@ add_action( 'init', 'create_rn24_faq_taxonomy');
 
 /*
  * Modulo per iscrizioni Comunità Capi
+*/
  function _get_coca_signin_form() {
-    $signupform .= <<<SIGNUPFORM
-        <form method="POST" autocomplete="off" action="" class="rn24SignupForm">
+
+    $box_opts = '';
+    $query = new WP_Query(array(
+            'post_type' => 'box',
+            'posts_per_page' => -1,
+            'meta_key'  => 'box_number',
+            'meta_type' => 'NUMERIC',
+            'orderby' => 'meta_value_num',
+            'order'          => 'ASC'
+    ));
+    
+    $selected_box = get_user_meta(get_current_user_id(), '_selected_box', true);
+    if ($query->have_posts() ) {
+        $boxes = $query->get_posts();
+        foreach ($boxes as $box) {
+            $box_opts .= sprintf('<option '.
+            ($selected_box == $box->ID ? 'selected': '')
+            .' value="%s">%s</option>', $box->ID, $box->post_title);
+        }
+    } 
+    
+    $happy_desc = get_user_meta(get_current_user_id(), '_happy_description', true);
+    $tangram_photo = get_user_meta(get_current_user_id(), 'tangram_photo', true);
+
+    $signupform .= <<<SIGNUPCOCAFORM
+        <form method="POST" autocomplete="off" action="" class="rn24CocaSignupForm" enctype="multipart/form-data">
             <div class="form-group">
-                <label for="regione">Regione</label>
-                <select id="regione" name="region" class="sl2 regione w-100" >
-                    <option value="-">Seleziona la tua regione</option>
-                    $region_value
-                    $regioni_opts
+                <label for="felicita">Che cosa vi rende felici insieme nel servizio?</label>
+                <textarea required maxlength="500" class="form-control" id="felicita" name="felicita" rows="10">$happy_desc</textarea>
+                <small id="passwordHelpBlock" class="form-text text-muted">Massimo 500 caratteri</small>
+            </div>
+            <div style="font-size: 14px !important;margin-bottom:5px;">Carica la foto del Tangram della tua Comunità capi</div>
+            
+            <img class="tangram-photo-preview" src="$tangram_photo" style="max-width: 500px;">
+            <div class="input-group mb-3">
+                
+                <div class="custom-file">
+                    <input name="tangram-photo" type="file" class="custom-file-input" id="tangram-photo">
+                    <label class="custom-file-label" for="tangram-photo">Seleziona</label>
+                </div>
+            </div>
+
+            <div class="form-group" style="$hide">
+                <label for="box">In quale ambito si colloca l'orizzonte di felicità che sentite vi rappresenta tutti?</label>
+                <select required id="box" name="selected-box" class="w-100 form-control" style="width: 100%">
+                $box_opts
                 </select>
-                $region_error
             </div>
-            <div class="form-group hideShowParent group" style="$hide">
-                <label for="gruppo">Gruppo</label>
-                <select id="gruppo" name="group" class="sl2 group w-100" style="width: 100%">
-                $group_value
-                </select>
-                $group_error
-            </div>
-            <div class="form-group hideShowParent email" style="$hide">
-                <label for="email">Email</label>
-                <input name="email" type="email" class="form-control w-100" id="email" aria-describedby="emailHelp" placeholder="Inserisci email" value="$email_value" disabled />
-                $email_error
-            </div>
-            <button type="submit" name="rn24-signup-submit" class="btn btn-primary" $disabled>Registrati</button>
+            <button type="submit" name="rn24-coca-sign-submit" class="btn btn-primary" $disabled>Conferma</button>
         </form>
-    SIGNUPFORM;
+        SIGNUPCOCAFORM;
 
     return $signupform;
 }
@@ -455,10 +501,7 @@ add_action( 'init', 'create_rn24_faq_taxonomy');
 function _get_coca_signin_success_message() {
     return <<<SUCCESSMESSAGE
         <div class="alert alert-success" role="alert">
-            <h4 class="alert-heading">Registrazione avvenuta con successo!</h4>
-            <p>Complimenti, la registrazione è completa.</p>
-            <hr>
-            <p class="mb-0">Verifica la casella email che hai indicato per accedere al portale.</p>
+            <h4 class="alert-heading">Selezione avvenuta con successo!</h4>
         </div>
     SUCCESSMESSAGE;
 }
@@ -466,24 +509,121 @@ function _get_coca_signin_success_message() {
 function _get_coca_signin_error_message() {
     return <<<SUCCESSMESSAGE
         <div class="alert alert-danger" role="alert">
-            <h4 class="alert-heading">Errore durante la Registrazione</h4>
-            <p>Siamo spiacenti, la registrazione non è completa.</p>
+            <h4 class="alert-heading">Errore durante la selezione</h4>
             <hr>
             <p class="mb-0">Contattaci per assistenza.</p>
         </div>
     SUCCESSMESSAGE;
 }
 function rn24_coca_signin_form($atts) {
-    if(is_user_logged_in())
-        return "Solo gli utenti non registrati possono vedere questa pagina";
-
-    if(isset($_GET['r24_success']))
+    if(!is_user_logged_in()) {
+        wp_redirect( wp_login_url(get_permalink()) );
+    }
+    if(isset($_GET['r24_coca_success']))
         return _get_coca_signin_success_message();
 
-    if(isset($_GET['r24_error']))
+    if(isset($_GET['r24_coca_error']))
         return _get_coca_signin_error_message();
 
     return _get_coca_signin_form();
 }
 
-add_shortcode('rn24_coca_signin_form', 'rn24_coca_signin_form'); */
+add_shortcode('rn24_coca_signin_form', 'rn24_coca_signin_form');
+
+
+function rn24_handle_coca_box_form(){
+    if(!isset($_POST['rn24-coca-sign-submit'] ) )
+        return;
+    
+    $redirect_url = sprintf(
+        '%s%s', get_site_url(), $_SERVER['REQUEST_URI']
+    );
+  
+
+    try {
+        if ( ! function_exists( 'wp_handle_upload' ) ) {
+            require_once( ABSPATH . 'wp-admin/includes/file.php' );
+        }
+        
+        $photo = $_FILES['tangram-photo'];
+        
+
+        if ($photo['name']) {
+            $uploadedfile = array(
+                'name'     => $photo['name'],
+                'type'     => $photo['type'],
+                'tmp_name' => $photo['tmp_name'],
+                'error'    => $photo['error'],
+                'size'     => $photo['size']
+            );
+            $upload_overrides = array( 'test_form' => false );
+            $movefile = wp_handle_upload( $uploadedfile, $upload_overrides );
+            if ( $movefile && !isset( $movefile['error'] ) ) {
+                delete_user_meta(get_current_user_id(), 'tangram_photo');
+                add_user_meta(get_current_user_id(), 'tangram_photo', $movefile["url"] );
+            }
+        }
+        delete_user_meta(get_current_user_id(), '_selected_box');
+        delete_user_meta(get_current_user_id(), '_happy_description');
+        add_user_meta(get_current_user_id(), '_selected_box', $_POST['selected-box']);
+        add_user_meta(get_current_user_id(), '_happy_description', $_POST['felicita']);
+    } catch(Exception $e) {
+        wp_redirect($redirect_url.'?r24_coca_error');
+        exit();
+    }
+
+    wp_redirect($redirect_url.'?r24_coca_success');
+    exit();
+}
+
+add_action( 'init', 'rn24_handle_coca_box_form' );
+
+add_action( 'show_user_profile', 'extra_user_profile_fields_rn24' );
+add_action( 'edit_user_profile', 'extra_user_profile_fields_rn24' );
+
+function extra_user_profile_fields_rn24( $user ) {
+    $box_opts = '';
+    $query = new WP_Query(array(
+            'post_type' => 'box',
+            'posts_per_page' => -1,
+            'meta_key'  => 'box_number',
+            'meta_type' => 'NUMERIC',
+            'orderby' => 'meta_value_num',
+            'order'          => 'ASC'
+    ));
+          
+    if ($query->have_posts() ) {
+        $boxes = $query->get_posts();
+        foreach ($boxes as $box) {
+            $box_opts .= sprintf('<option '.
+            (get_user_meta($user->ID, '_selected_box', true) == $box->ID ? 'selected': '')
+            .' value="%s">%s</option>', $box->ID, $box->post_title);
+        }
+    } 
+    
+    ?>
+    <h3>RN24</h3>
+
+    <table class="form-table">
+    <tr>
+        <th><label for="selected-box">Scatola selezionata</label></th>
+        <td>
+            <select id="box" name="selected-box" class="w-100 form-control" style="width: 100%">
+               <?php echo $box_opts; ?>
+            </select>            
+        </td>
+    </tr>
+    <tr>
+        <th><label for="happy-description">Descrizione felicità</label></th>
+        <td>
+            <textarea name="selected-box" id="selected-box" class="regular-text"><?php echo esc_attr( get_user_meta($user->ID, '_happy_description', true) ); ?></textarea><br />
+        </td>
+    </tr>
+    <tr>
+        <th><label for="tangram-photo">Tangram</label></th>
+        <td>
+            <img src="<?php echo get_user_meta($user->ID, 'tangram_photo', true); ?>" style="max-width: 500px;">
+        </td>
+    </tr>
+    </table>
+<?php }

@@ -71,6 +71,35 @@ $(document).ready(function() {
          
          // Adding layer to the map
          map.addLayer(layer);
+
+         // a layer group, used here like a container for markers
+        var markersGroup = L.layerGroup();
+        map.addLayer(markersGroup);
+
+        $.getJSON('https://rn24.agesci.it/wp-content/themes/rn24-iscrizioni-theme/data/groups.json', function(data) {
+            var vita_giusta = L.icon({
+                iconUrl: 'https://rn24.agesci.it/wp-content/uploads/2023/11/vita-giusta.png',        
+                iconSize: [16],
+                popupAnchor: [0, -45]
+            });
+            if (data) {
+
+                for (var i = 0; i < data.length; i++) {
+                    if (data[i]["Latitudine"] && data[i]["Longitudine"]) {
+                        L.marker([
+                            data[i]["Latitudine"],
+                            data[i]["Longitudine"]
+                        ], { icon: vita_giusta})
+                        .bindPopup(L.popup().setContent(
+                            data[i]["Denominazione Gruppo"] + '<br>'
+                            + data[i]["zona"] + '<br>'
+                            + data[i]["Regione"] 
+                        ))
+                        .addTo(markersGroup);
+                    }
+                }
+            }
+        });
     }
 
     $('.box-wrapper-container').click(function(e) {
@@ -82,6 +111,12 @@ $(document).ready(function() {
             $(this).addClass('selected');
             $(this).removeClass('unselected');
         }
+    });
+
+    // Add the following code if you want the name of the file appear on select
+    $(".custom-file-input").on("change", function() {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
     });
 
     $('.faq-item.row').click(function() {
@@ -102,6 +137,10 @@ $(document).ready(function() {
         $('.box-map-italy .regione').removeClass('selected');
         $(this).addClass('selected'); 
         $('span.region-details-name').text($(this).data('nome-regione'));
+
+        $('.region-details-title').removeClass('d-none');
+        $('.region-details-title-empty').addClass('d-none');
+
         $.ajax({
             url: rn24_ajax_object.ajaxurl,
             type: "POST",

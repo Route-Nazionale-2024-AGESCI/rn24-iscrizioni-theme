@@ -20,8 +20,8 @@ get_header(); ?>
                   $args = array(
                     'post_type' => 'timeline',
                     'posts_per_page' => -1,
-                    'meta_key'  => 'event_fulldate',
-                    'meta_type' => 'DATE',
+                    'meta_key'  => 'event_order',
+                    'meta_type' => 'NUMERIC',
                     'orderby' => 'meta_value_num',
                     'order'          => 'ASC'
                   );
@@ -33,6 +33,13 @@ get_header(); ?>
                     $event_date = get_post_meta( $id, 'event_date', true );
                     $event_year = get_post_meta( $id, 'event_year', true );
                     $event_fulldate = get_post_meta( $id, 'event_fulldate', true );
+
+                    $category = null;
+                    $terms = get_the_terms( $post->ID, 'timeline_categories' ); 
+                    if (isset($terms) && count($terms) > 0) {
+                      $category = $terms[0]->slug;
+                    }
+                    //var_dump($terms);
                     $passed = false;
                     if (isset($event_fulldate)) {
                       $passed = time() >= strtotime($event_fulldate);
@@ -54,9 +61,14 @@ get_header(); ?>
                           <p class="timeline-date-year"><?php echo $event_year; ?> <span class="timeline-date-month"><?php echo $event_date; ?></span></p>
                         </div>
                       <div class="timeline-content col-md-8 col-10 row">
-                        <div class="timeline-image col-4" style="background-image: url(<?php echo get_the_post_thumbnail_url(); ?>);"></div>
+                        <div class="timeline-image col-4 <?php echo $category;?>" style="background-image: url(<?php echo get_the_post_thumbnail_url(); ?>);"></div>
                         <div class="timeline-data col-8">
                           <a href="<?php echo the_permalink();?>">
+                            <?php if ($category != null) : ?>
+                            <p class="timeline-icon-category <?php echo $category;?>">
+                              <img src="<?php echo get_bloginfo('template_directory'); ?>/img/<?php echo $category;?>.png" alt="Tipologia evento">
+                            </p>
+                            <?php endif; ?>
                             <p class="timeline-event-title"><?php the_title(); ?></p>
                           </a>
                           <div class="timeline-event-abstract"><?php the_excerpt(); ?></div>

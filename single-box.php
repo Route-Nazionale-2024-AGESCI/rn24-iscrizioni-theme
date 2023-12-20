@@ -5,7 +5,10 @@
 
       <div class="row">
         <section class="col">
-          <?php while ( have_posts() ) : the_post(); global $post; ?>
+          <?php while ( have_posts() ) : the_post(); global $post; 
+          $id = get_the_ID();
+          $video_url = get_post_meta( $id, 'box_video', true );
+          ?>
 
             <article class="<?php echo $post->post_name;?>">
               <div class="box-page-title">
@@ -17,22 +20,24 @@
               </div>
 
               <div class="box-map row">
-                <div class="col-12 col-md-6 box-map-italy">
-                  <?php echo get_italy_map(); ?>
+                <div class="col-12 col-md-7 coca-sidebar">
+                    <?php the_content(); ?>
                 </div>
-                <div class="col-12 col-md-6">
+
+
+                <div class="col-12 col-md-4 offset-md-1 box-map-italy">
+                  <?php echo get_italy_map(); ?>
                   <div class="region-details">
-                    <p class="region-details-title">
-                      I Gruppi della Regione <span class="region-details-name">Lazio</span> che hanno scelto di essere felici così
+                    <p class="region-details-title region-details-title-empty">
+                      Seleziona una <span class="region-details-name">Regione</span> per scoprire i Gruppi che hanno scelto questi contenuti
+                    </p>
+                    <p class="region-details-title d-none">
+                      I Gruppi della Regione <span class="region-details-name">Lazio</span> che hanno scelto questi contenuti
                     </p>
                     <ul></ul>
                   </div>
                 </div>
-              </div>
-              
-              <h2 class="box-headline">Potrebbe interessarti...</h2>
-              <div class="page-content">
-                <?php the_content(); ?>
+                
               </div>
               
             </article>

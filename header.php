@@ -59,9 +59,9 @@
                   'walker'            => new WP_Bootstrap_Navwalker(),
               ) );
             } ?>
-          <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home mt-3 mt-md-0">
+          <!--<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home mt-3 mt-md-0">
             <a class="btn btn-primary text-center text-md-left btn-iscrizioni" href="<?php echo site_url('/inizia');?>">Iscrivi la tua Co.ca.</a>
-          </li>
+          </li>-->
         </ul>
       </div>
     </div><!-- .container -->
