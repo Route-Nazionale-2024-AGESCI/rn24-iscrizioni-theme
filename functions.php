@@ -627,3 +627,34 @@ function extra_user_profile_fields_rn24( $user ) {
     </tr>
     </table>
 <?php }
+
+
+/**
+ * Songs
+ */
+function create_rn24_song_post_type() {
+    register_post_type( 'song',
+        array(
+            'labels' => array(
+                'name' => __( 'Canzoni' ),
+                'singular_name' => __( 'Canzone' )
+            ),
+            'public' => true,
+            'has_archive' => true,
+			'menu_icon' => 'dashicons-format-audio',
+            'rewrite' => array('slug' => 'song'),
+            'show_in_rest' => true,
+			'menu_position' => 7,
+			'supports' => array( 
+				'title', 
+				'editor', 
+				'thumbnail', 
+				'custom-fields', 
+				'revisions',
+				'excerpt'
+			  )
+        )
+    );
+
+}
+add_action( 'init', 'create_rn24_song_post_type' );
