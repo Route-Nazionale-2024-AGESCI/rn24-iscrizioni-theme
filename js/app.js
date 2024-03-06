@@ -161,14 +161,49 @@ $(document).ready(function() {
                 action: 'rn24_select_zones'
             },
             success: function(data){
-                $('.region-details ul').empty();
+                $('.region-details ul.zone-list').empty();
+                $('.region-details ul.groups-list').empty();
+                $('.groups-title').addClass('d-none');
+                $('.groups-title-empty').addClass('d-none');
                 var tplDir = $('#template-directory-url').val();
                 for (var i = 0; i < data.length; i++) {
                     var li = $('<li></li>');
+                    li.addClass('zona-item');
+                    li.data('zona', data[i]);
                     li.append('<span class="region-zone">' + data[i] + '</span>');
                     var btn = $('<img src="' + tplDir + '/img/arrow-right.svg" class="region-zone-btn" alt="Dettaglio">');
+                    li.click(function() {
+                        $('.groups-title').addClass('d-none');
+                        $('.groups-title-empty').addClass('d-none');
+                        $('.region-details ul.groups-list').empty();
+                        $('.zona-item').removeClass('selected');
+                        $(this).addClass('selected');
+                        $.ajax({
+                            url: '/wp-json/rn24/v1/boxes/?zona=' 
+                            + $(this).data('zona') + '&box=' + $('h1.page-title').text(),
+                            type: "GET",
+                            dataType: "json",
+                            success: function(groups){
+                                for (var i = 0; i < groups.length; i++) {
+                                    var lig = $('<li></li>');
+                                    lig.data('gruppo', data[i].codice_gruppo);
+                                    lig.append('<span class="region-zone">' + groups[i].denominazione + '</span>');
+                                    $('.region-details ul.groups-list').append(lig);
+                                }
+                                if (groups.length > 0) {
+                                    $('.groups-title').removeClass('d-none');
+                                } else {
+                                    $('.groups-title-empty').removeClass('d-none');
+                                }
+                            },
+                            error: function(error){
+                                 console.log("Error:");
+                                 console.log(error);
+                            }
+                        });
+                    })
                     li.append(btn);
-                    $('.region-details ul').append(li);
+                    $('.region-details ul.zone-list').append(li);
                 }
             },
             error: function(error){

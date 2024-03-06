@@ -658,3 +658,43 @@ function create_rn24_song_post_type() {
 
 }
 add_action( 'init', 'create_rn24_song_post_type' );
+
+
+
+
+/**
+ * Grab latest post title by an author!
+ *
+ * @param array $data Options for the function.
+ * @return string|null Post title for the latest, * or null if none.
+ */
+function get_coca_boxes( $data ) {    
+    global $wpdb;    
+    
+    $sql = "SELECT u.user_login AS codice_gruppo, u.display_name AS denominazione, g.zona, g.regione,
+    (SELECT p.post_title FROM wp_usermeta umb 
+    LEFT JOIN wp_posts p ON p.ID = umb.meta_value where umb.meta_key = '_selected_box'
+    and umb.user_id = u.ID) AS selected_box
+    FROM wp_usermeta um
+    LEFT JOIN wp_users u ON u.ID = um.user_id
+    LEFT JOIN rn24_gruppi g ON g.codice_gruppo = u.user_login
+     WHERE um.meta_key = '_happy_description' ";
+
+    if (isset($_GET['zona'])) {
+        $sql .= " AND g.zona = %s ";
+    }
+    $sql .= " HAVING selected_box = %s ORDER BY u.display_name";
+    $safe_sql = isset($_GET['zona']) ? $wpdb->prepare(
+        $sql, [$_GET['zona'], $_GET['box']]
+    ) : $wpdb->prepare($sql, $_GET['box']);
+
+    $result = $wpdb->get_results($safe_sql);
+    return $result;
+  }
+
+  add_action( 'rest_api_init', function () {
+    register_rest_route( 'rn24/v1', '/boxes/', array(
+      'methods' => 'GET',
+      'callback' => 'get_coca_boxes',
+    ) );
+  } );

@@ -26,6 +26,10 @@
 
 
                 <div class="col-12 col-md-4 offset-md-1 box-map-italy">
+                <?php 
+                        global $wpdb; $results = $wpdb->get_results(" SELECT count(*) as 'box_coca' FROM $wpdb->usermeta WHERE meta_key = '_selected_box' AND meta_value = '$id'"); ?>
+                        <p class="box-counter-details"><b><?php echo $results[0]->box_coca; ?></b> Comunità capi</p>
+
                   <?php echo get_italy_map(); ?>
                   <div class="region-details">
                     <p class="region-details-title region-details-title-empty">
@@ -34,7 +38,15 @@
                     <p class="region-details-title d-none">
                       I Gruppi della Regione <span class="region-details-name">Lazio</span> che hanno scelto questi contenuti
                     </p>
-                    <ul></ul>
+                    <ul class="zone-list"></ul>
+
+                    <p class="groups-title d-none">
+                      Elenco Gruppi
+                    </p>
+                    <p class="groups-title-empty d-none">
+                      Nessun Gruppo trovato
+                    </p>
+                    <ul class="groups-list"></ul>
                   </div>
                 </div>
                 
