@@ -697,4 +697,55 @@ function get_coca_boxes( $data ) {
       'methods' => 'GET',
       'callback' => 'get_coca_boxes',
     ) );
+    register_rest_route( 'rn24/v1', '/boxes/export', array(
+        'methods' => 'GET',
+        'callback' => 'get_coca_happines_export',
+      ) );
   } );
+
+  /**
+ * 
+ *
+ * @param array $data Options for the function.
+ * @return string|null Post title for the latest, * or null if none.
+ */
+function get_coca_happines_export( $data ) {
+    global $wpdb;    
+    
+    $sql = "SELECT u.user_login AS codice, u.display_name AS display_name, g.zona, g.regione,
+    (SELECT p.post_title FROM wp_usermeta umb 
+    LEFT JOIN wp_posts p ON p.ID = umb.meta_value where umb.meta_key = '_selected_box'
+    and umb.user_id = u.ID) AS selected_box,
+    (SELECT umb.meta_value FROM wp_usermeta umb where umb.meta_key = 'tangram_photo' and umb.user_id = u.ID) AS tangram_photo,
+    um.meta_value as descrizione
+    FROM wp_usermeta um
+    LEFT JOIN wp_users u ON u.ID = um.user_id
+    LEFT JOIN rn24_gruppi g ON g.codice_gruppo = u.user_login
+    WHERE um.meta_key = '_happy_description'
+    ORDER BY u.display_name";
+
+    $result = $wpdb->get_results($sql);
+
+    $out = '"Codice gruppo";"Gruppo";"Zona";"Regione";"Felici di...";"Descrizione";"Immagine";'."\r\n";
+
+    foreach ($result as &$value) {
+        //If the character " exists, then escape it, otherwise the csv file will be invalid.
+        $out .= '"'.$value->codice.'";';
+        $out .= '"'.$value->display_name.'";';
+        $out .= '"'.$value->zona.'";';
+        $out .= '"'.$value->regione.'";';
+        $out .= '"'.$value->selected_box.'";';
+        $out .= '"'.str_replace('"', '""', $value->descrizione).'";';
+        $out .= '"'.$value->tangram_photo.'"'."\r\n";
+    }
+
+    //var_dump($out);
+
+    // Output to browser with the CSV mime type
+    header("Content-type: text/csv; charset=UTF-8");
+    header("Content-Disposition: attachment; filename=rn24_felici_di_export.csv");
+    header("Content-Transfer-Encoding: UTF-8");
+    echo "\xEF\xBB\xBF"; // UTF-8 BOM
+    echo $out;
+  }
+
