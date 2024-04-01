@@ -1,4 +1,7 @@
 <?php
+
+require_once 'booking-sync/main.php';
+
 add_filter( 'show_admin_bar', '__return_false' );
 
 // Registrazione header main menu
@@ -748,4 +751,3 @@ function get_coca_happines_export( $data ) {
     echo "\xEF\xBB\xBF"; // UTF-8 BOM
     echo $out;
   }
-
