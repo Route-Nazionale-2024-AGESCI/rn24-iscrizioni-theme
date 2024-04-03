@@ -3,15 +3,18 @@ if (!is_user_logged_in()) {
 	wp_redirect(site_url('/login'));
 	exit();
 }
+use BookingSyncUtils as BSUtils;
 
 $em_event = new EM_Event(get_the_ID(), 'post_id');
 $em_person = new EM_Person(get_current_user_id());
 $user_bookings = $em_person->get_bookings();
 
+$data = null;
 $user_booking = null;
 foreach ( $user_bookings as $booking ) {
     if ( $booking->event_id == $em_event->event_id ) {
       $user_booking = $booking;
+      $data = BSUtils\get_data();
       break;
     }
 }
@@ -93,6 +96,16 @@ get_header(); ?>
                               </tr>
                             </tbody>
                         </table>
+                      <hr />
+                      <h4>Ecco i capi che si sono iscritti</h4>
+                      <ul>
+                        <?php foreach ($data[$em_person->user_login] as $scout_leader): ?>
+                        <li><?php echo $scout_leader;?></li>
+                        <?php endforeach; ?>
+
+                      </ul>
+
+                      <p>Qualcosa che non ti torna? Contattaci!</p>
                 <?php
                   }
                 ?>
