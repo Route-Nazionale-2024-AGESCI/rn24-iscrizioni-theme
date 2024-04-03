@@ -9,12 +9,13 @@ $em_event = new EM_Event(get_the_ID(), 'post_id');
 $em_person = new EM_Person(get_current_user_id());
 $user_bookings = $em_person->get_bookings();
 
-$data = null;
+$booked_users = [];
 $user_booking = null;
 foreach ( $user_bookings as $booking ) {
     if ( $booking->event_id == $em_event->event_id ) {
       $user_booking = $booking;
       $data = BSUtils\get_data();
+      $booked_users = $data[$em_person->user_login];
       break;
     }
 }
@@ -83,8 +84,7 @@ get_header(); ?>
                       </div>
                       
                 <?php } 
-                
-                  if($booking && in_array($booking->booking_status, [1, 5])) {
+                  if($user_booking && in_array($user_booking->booking_status, [1, 5])) {
                 ?>
                   <hr />
                       <h4>Informazioni sulla prenotazione</h4>
@@ -99,8 +99,8 @@ get_header(); ?>
                       <hr />
                       <h4>Ecco i capi che si sono iscritti</h4>
                       <ul>
-                        <?php foreach ($data[$em_person->user_login] as $scout_leader): ?>
-                        <li><?php echo $scout_leader;?></li>
+                        <?php foreach ($booked_users as $booked_user): ?>
+                        <li><?php echo implode(', ', $booked_user);?></li>
                         <?php endforeach; ?>
 
                       </ul>

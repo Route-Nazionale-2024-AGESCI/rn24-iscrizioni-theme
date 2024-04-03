@@ -13,17 +13,16 @@ function get_data() {
     
     if (($handle = fopen($csv_path, "r")) !== FALSE) {
         // Read the headers
-        $headers = fgetcsv($handle, 1000, ",");
+        $headers = fgetcsv($handle, 1000, ";");
         
         $ordinale_gruppo_index = array_search("ordinale gruppo", $headers);
-        $codice_socio_index = array_search("Codice socio", $headers);
         
         // Read the file line by line
-        while (($row = fgetcsv($handle, 1000, ",")) !== FALSE) {
+        while (($row = fgetcsv($handle, 1000, ";")) !== FALSE) {
 
             $ordinale_gruppo = $row[$ordinale_gruppo_index];
-            
-            $data[$ordinale_gruppo][] = $row[$codice_socio_index];
+            unset($row[$ordinale_gruppo_index]);
+            $data[$ordinale_gruppo][] = $row;
         }
         
         fclose($handle);
