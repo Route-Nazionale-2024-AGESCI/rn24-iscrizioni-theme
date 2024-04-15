@@ -997,9 +997,12 @@ p.timeline-icon-category.arena24 {
     display: none;
 }
 p.timeline-icon-category.box {
-    display: none;
+    display: block;
 }
-
+p.timeline-icon-category.box img {
+    width: 20px;
+    margin: 4px;
+}
 p.page-title-icon-category {
     margin: 0;
     text-align: center;

@@ -681,7 +681,7 @@ function get_coca_boxes( $data ) {
     FROM wp_usermeta um
     LEFT JOIN wp_users u ON u.ID = um.user_id
     LEFT JOIN rn24_gruppi g ON g.codice_gruppo = u.user_login
-     WHERE um.meta_key = '_happy_description' ";
+     WHERE um.meta_key = '_selected_box' ";
 
     if (isset($_GET['zona'])) {
         $sql .= " AND g.zona = %s ";

@@ -26,6 +26,9 @@ get_header(); ?>
                         <a href="<?php echo site_url('/box-coca');?>" class="<?php echo str_contains(get_permalink(), '/box-coca') ? 'active' : '';?>">
                           <li><i class="fa fa-archive" aria-hidden="true"></i>Il tangram</li>
                         </a>
+                        <a href="<?php echo site_url('/azioni-di-felicita');?>" class="<?php echo str_contains(get_permalink(), '/azioni-di-felicita') ? 'active' : '';?>">
+                          <li><i class="fa fa-smile-o" aria-hidden="true"></i>Azioni di felicità</li>
+                        </a>
                       </ul>
                 </aside>
                 <div class="col-md-7 col-12 offset-md-1">
