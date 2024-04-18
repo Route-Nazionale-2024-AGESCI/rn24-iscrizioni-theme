@@ -346,3 +346,27 @@ function do_sync(array $data, int $event_id) {
     return $success;
 }
 
+add_filter(
+    'em_bookings_build_sql_conditions',
+    function ($conditions, ...$args) {
+        global $wpdb;
+
+        if(!empty($_REQUEST['em_search'])) {
+            global $wpdb;
+
+            if( !empty($conditions['search']) ){
+                $conditions['search'] .= ' OR ';
+            }
+            else {
+                $conditions['search'] = '';
+            }
+
+            $value = sanitize_text_field($_REQUEST['em_search']);
+           
+			$search = $wpdb->prepare(EM_BOOKINGS_TABLE.'.person_id IN (SELECT ID FROM '.$wpdb->users ." WHERE display_name LIKE %s)", $value.'%');
+			$conditions['search'] .= '('.$search.')';
+		}
+
+        return $conditions;
+    }
+);
