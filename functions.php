@@ -470,7 +470,7 @@ add_action( 'init', 'create_rn24_faq_taxonomy');
     $happy_desc = get_user_meta(get_current_user_id(), '_happy_description', true);
     $tangram_photo = get_user_meta(get_current_user_id(), 'tangram_photo', true);
 
-    $signupform .= <<<SIGNUPCOCAFORM
+    $signupform = <<<SIGNUPCOCAFORM
         <form method="POST" autocomplete="off" action="" class="rn24CocaSignupForm" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="felicita">Che cosa vi rende felici insieme nel servizio?</label>
@@ -497,6 +497,58 @@ add_action( 'init', 'create_rn24_faq_taxonomy');
             <button type="submit" name="rn24-coca-sign-submit" class="btn btn-primary" $disabled>Conferma</button>
         </form>
         SIGNUPCOCAFORM;
+
+    return $signupform;
+}
+
+/*
+ * Modulo per azioni felicità Comunità Capi
+*/
+function _get_coca_azione_felicita_form() {
+
+    $happy_history = get_user_meta(get_current_user_id(), '_happy_history', true);
+    $happy_irrinunciabile = get_user_meta(get_current_user_id(), '_happy_irrinunciabile', true);
+    $happy_reel = get_user_meta(get_current_user_id(), '_happy_reel', true);
+
+    $signupform = <<<SIGNUPCOCAHAPPYFORM
+            <form method="POST" autocomplete="off" action="" class="rn24CocaSignupForm" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="felicita">1) La <b>narrazione del vostro capolavoro</b>: un testo libero (max 800 battute) che racconti il vostro percorso di felicità attraverso le azioni, i luoghi, la strada e le realtà coinvolte che lo hanno caratterizzato.</label>
+                <textarea required maxlength="800" class="form-control" id="felicita" name="happy_history" rows="12">$happy_history</textarea>
+                <small id="passwordHelpBlock" class="form-text text-muted">Massimo 800 caratteri</small>
+            </div>
+            <div style="font-size: 14px !important;margin-bottom:5px;">2) Una <b>foto o un reel</b>: che restituisca un momento importante e significativo del vostro percorso.</div>
+            
+            SIGNUPCOCAHAPPYFORM;
+
+    if (!isset($happy_reel) || $happy_reel == null) {
+        $signupform .= <<<SIGNUPCOCAHAPPYFORM
+        <div class="input-group mb-3">
+            
+            <div class="custom-file">
+                <input name="tangram-photo" type="file" class="custom-file-input" id="tangram-photo">
+                <label class="custom-file-label" for="tangram-photo">Seleziona</label>
+            </div>
+        </div>
+        SIGNUPCOCAHAPPYFORM;
+    } else {
+        $signupform .= <<<SIGNUPCOCAHAPPYFORM
+        <a class="input-group download-reel-btn" href="$happy_reel" target="_blank">
+            <button class="btn btn-secondary">Scarica</button>
+        </a>
+        SIGNUPCOCAHAPPYFORM;
+    }
+    
+    $signupform .= <<<SIGNUPCOCAHAPPYFORM
+
+            <div class="form-group">
+                <label for="box">3) Un <b>"irrinunciabile"</b>: un testo breve (max 300 battute) che presenti un'intuizione condivisa in Comunità capi, un'attenzione sperimentata, una frase di un documento, quelle parole di una testimonianza significativa che nel percorso avete sentito risuonare per la vostra felicità, ciò che credete fermamente debba diventare patrimonio di tutta l'Associazione, debba indirizzarne il percorso futuro affinché la vostra felicità vissuta e agita possa essere la felicità di tanti.</label>
+                <textarea required maxlength="300" class="form-control" id="happy_irrinunciabile" name="happy_irrinunciabile" rows="8">$happy_irrinunciabile</textarea>
+                <small id="passwordHelpBlock" class="form-text text-muted">Massimo 300 caratteri</small>
+            </div>
+            <button type="submit" name="rn24-coca-happy-submit" class="btn btn-primary">Conferma</button>
+        </form>
+        SIGNUPCOCAHAPPYFORM;
 
     return $signupform;
 }
@@ -532,6 +584,20 @@ function rn24_coca_signin_form($atts) {
 }
 
 add_shortcode('rn24_coca_signin_form', 'rn24_coca_signin_form');
+
+function rn24_coca_happy_form($atts) {
+    if(!is_user_logged_in()) {
+        wp_redirect( wp_login_url(get_permalink()) );
+    }
+    if(isset($_GET['r24_coca_success']))
+        return _get_coca_signin_success_message();
+
+    if(isset($_GET['r24_coca_error']))
+        return _get_coca_signin_error_message();
+
+    return _get_coca_azione_felicita_form();
+}
+add_shortcode('rn24_coca_happy_form', 'rn24_coca_happy_form');
 
 
 function rn24_handle_coca_box_form(){
@@ -579,7 +645,78 @@ function rn24_handle_coca_box_form(){
     exit();
 }
 
+
+function rn24_handle_coca_happy_form(){
+    if(!isset($_POST['rn24-coca-happy-submit'] ) )
+        return;
+    
+    $redirect_url = sprintf(
+        '%s%s', get_site_url(), $_SERVER['REQUEST_URI']
+    );
+  
+
+    try {
+        if ( ! function_exists( 'wp_handle_upload' ) ) {
+            require_once( ABSPATH . 'wp-admin/includes/file.php' );
+        }
+        
+        $photo = $_FILES['tangram-photo'];
+        
+
+        $upload_url = '';
+        if ($photo['name']) {
+            $uploadedfile = array(
+                'name'     => $photo['name'],
+                'type'     => $photo['type'],
+                'tmp_name' => $photo['tmp_name'],
+                'error'    => $photo['error'],
+                'size'     => $photo['size']
+            );
+            $upload_overrides = array( 'test_form' => false );
+            $movefile = wp_handle_upload( $uploadedfile, $upload_overrides );
+            if ( $movefile && !isset( $movefile['error'] ) ) {
+                delete_user_meta(get_current_user_id(), '_happy_reel');
+                add_user_meta(get_current_user_id(), '_happy_reel', $movefile["url"] );
+                $upload_url = $movefile["url"];
+            }
+        }
+
+        $happy_history = get_user_meta(get_current_user_id(), '_happy_history', true);
+    $happy_irrinunciabile = get_user_meta(get_current_user_id(), '_happy_irrinunciabile', true);
+
+        delete_user_meta(get_current_user_id(), '_happy_history');
+        delete_user_meta(get_current_user_id(), '_happy_irrinunciabile');
+        add_user_meta(get_current_user_id(), '_happy_history', $_POST['happy_history']);
+        add_user_meta(get_current_user_id(), '_happy_irrinunciabile', $_POST['happy_irrinunciabile']);
+
+        $currentUser = wp_get_current_user();
+        // Create post object
+        $azioneFelicita = array(
+        'post_title'    => $currentUser->user_nicename,
+        'post_content'  => $_POST['happy_history'],
+        'post_status'   => 'publish',
+        'post_author'   => get_current_user_id(),
+        'post_type' => 'azioni_felicita',
+        'meta_input'   => array(
+            'irrinunciabile' => $_POST['happy_irrinunciabile'],
+            'upload' => get_user_meta(get_current_user_id(), '_happy_reel', true)
+            )
+        );
+
+        // Insert the post into the database
+        wp_insert_post( $azioneFelicita );
+
+    } catch(Exception $e) {
+        wp_redirect($redirect_url.'?r24_coca_error');
+        exit();
+    }
+
+    wp_redirect($redirect_url.'?r24_coca_success');
+    exit();
+}
+
 add_action( 'init', 'rn24_handle_coca_box_form' );
+add_action( 'init', 'rn24_handle_coca_happy_form' );
 
 add_action( 'show_user_profile', 'extra_user_profile_fields_rn24' );
 add_action( 'edit_user_profile', 'extra_user_profile_fields_rn24' );
@@ -653,8 +790,7 @@ function create_rn24_song_post_type() {
 				'editor', 
 				'thumbnail', 
 				'custom-fields', 
-				'revisions',
-				'excerpt'
+				'revisions'
 			  )
         )
     );
@@ -751,3 +887,34 @@ function get_coca_happines_export( $data ) {
     echo "\xEF\xBB\xBF"; // UTF-8 BOM
     echo $out;
   }
+
+
+  /**
+ * FAQ
+ */
+function create_azioni_felicita_post_type() {
+    register_post_type( 'azioni_felicita',
+        array(
+            'labels' => array(
+                'name' => __( 'Azioni di felicità' ),
+                'singular_name' => __( 'Azione di felicità' )
+            ),
+            'public' => true,
+            'has_archive' => true,
+			'menu_icon' => 'dashicons-smiley',
+            'rewrite' => array('slug' => 'happy-action'),
+            'show_in_rest' => true,
+			'menu_position' => 8,
+			'supports' => array( 
+				'title', 
+				'editor', 
+				'thumbnail', 
+				'custom-fields', 
+				'revisions',
+				'excerpt'
+			  )
+        )
+    );
+
+}
+add_action( 'init', 'create_azioni_felicita_post_type' );

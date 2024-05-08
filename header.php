@@ -14,10 +14,12 @@
                       if ( is_user_logged_in() ) { ?>
                       <div class="logged-user">
                         <ul class="navbar-nav">
-                          <li class="nav-item logged-user-info">
-                            <span class="logged-user-name"><?php echo $current_user->display_name; ?></span>
-                            <span class="logged-user-email"><?php echo $current_user->user_email; ?></span>
-                          </li>
+                          <a href="<?php echo get_bloginfo( 'wpurl' ); ?>/eventi/le-mie-prenotazioni/">
+                            <li class="nav-item logged-user-info">
+                              <span class="logged-user-name"><?php echo $current_user->display_name; ?></span>
+                              <span class="logged-user-email"><?php echo $current_user->user_email; ?></span>
+                            </li>
+                        </a>
                       </ul>
                       <a class="logout-btn" href="<?php echo wp_logout_url( home_url() ); ?>" title="Logout">Logout</a>
                     </div>
