@@ -659,53 +659,57 @@ function rn24_handle_coca_happy_form(){
         if ( ! function_exists( 'wp_handle_upload' ) ) {
             require_once( ABSPATH . 'wp-admin/includes/file.php' );
         }
-        
-        $photo = $_FILES['tangram-photo'];
+
+        if (get_current_user_id() < 1) {
+            $photo = $_FILES['tangram-photo'];
         
 
-        $upload_url = '';
-        if ($photo['name']) {
-            $uploadedfile = array(
-                'name'     => $photo['name'],
-                'type'     => $photo['type'],
-                'tmp_name' => $photo['tmp_name'],
-                'error'    => $photo['error'],
-                'size'     => $photo['size']
-            );
-            $upload_overrides = array( 'test_form' => false );
-            $movefile = wp_handle_upload( $uploadedfile, $upload_overrides );
-            if ( $movefile && !isset( $movefile['error'] ) ) {
-                delete_user_meta(get_current_user_id(), '_happy_reel');
-                add_user_meta(get_current_user_id(), '_happy_reel', $movefile["url"] );
-                $upload_url = $movefile["url"];
+            $upload_url = '';
+            if ($photo['name']) {
+                $uploadedfile = array(
+                    'name'     => $photo['name'],
+                    'type'     => $photo['type'],
+                    'tmp_name' => $photo['tmp_name'],
+                    'error'    => $photo['error'],
+                    'size'     => $photo['size']
+                );
+                $upload_overrides = array( 'test_form' => false );
+                $movefile = wp_handle_upload( $uploadedfile, $upload_overrides );
+                if ( $movefile && !isset( $movefile['error'] ) ) {
+                    delete_user_meta(get_current_user_id(), '_happy_reel');
+                    add_user_meta(get_current_user_id(), '_happy_reel', $movefile["url"] );
+                    $upload_url = $movefile["url"];
+                }
             }
+    
+            $happy_history = get_user_meta(get_current_user_id(), '_happy_history', true);
+            $happy_irrinunciabile = get_user_meta(get_current_user_id(), '_happy_irrinunciabile', true);
+    
+            delete_user_meta(get_current_user_id(), '_happy_history');
+            delete_user_meta(get_current_user_id(), '_happy_irrinunciabile');
+            add_user_meta(get_current_user_id(), '_happy_history', $_POST['happy_history']);
+            add_user_meta(get_current_user_id(), '_happy_irrinunciabile', $_POST['happy_irrinunciabile']);
+    
+            $currentUser = wp_get_current_user();
+            // Create post object
+            $azioneFelicita = array(
+            'post_title'    => $currentUser->display_name,
+            'post_content'  => $_POST['happy_history'],
+            'post_status'   => 'publish',
+            'post_author'   => get_current_user_id(),
+            'post_type' => 'azioni_felicita',
+            'meta_input'   => array(
+                'irrinunciabile' => $_POST['happy_irrinunciabile'],
+                'upload' => get_user_meta(get_current_user_id(), '_happy_reel', true)
+                )
+            );
+    
+            // Insert the post into the database
+            wp_insert_post( $azioneFelicita );
+        } else {
+            wp_redirect($redirect_url.'?r24_coca_error');
+            exit();
         }
-
-        $happy_history = get_user_meta(get_current_user_id(), '_happy_history', true);
-    $happy_irrinunciabile = get_user_meta(get_current_user_id(), '_happy_irrinunciabile', true);
-
-        delete_user_meta(get_current_user_id(), '_happy_history');
-        delete_user_meta(get_current_user_id(), '_happy_irrinunciabile');
-        add_user_meta(get_current_user_id(), '_happy_history', $_POST['happy_history']);
-        add_user_meta(get_current_user_id(), '_happy_irrinunciabile', $_POST['happy_irrinunciabile']);
-
-        $currentUser = wp_get_current_user();
-        // Create post object
-        $azioneFelicita = array(
-        'post_title'    => $currentUser->user_nicename,
-        'post_content'  => $_POST['happy_history'],
-        'post_status'   => 'publish',
-        'post_author'   => get_current_user_id(),
-        'post_type' => 'azioni_felicita',
-        'meta_input'   => array(
-            'irrinunciabile' => $_POST['happy_irrinunciabile'],
-            'upload' => get_user_meta(get_current_user_id(), '_happy_reel', true)
-            )
-        );
-
-        // Insert the post into the database
-        wp_insert_post( $azioneFelicita );
-
     } catch(Exception $e) {
         wp_redirect($redirect_url.'?r24_coca_error');
         exit();
@@ -908,6 +912,7 @@ function create_azioni_felicita_post_type() {
 			'supports' => array( 
 				'title', 
 				'editor', 
+                'author',
 				'thumbnail', 
 				'custom-fields', 
 				'revisions',
@@ -918,3 +923,33 @@ function create_azioni_felicita_post_type() {
 
 }
 add_action( 'init', 'create_azioni_felicita_post_type' );
+
+ /**
+ * FAQ
+ */
+function create_sustainability_post_type() {
+    register_post_type( 'sustainability',
+        array(
+            'labels' => array(
+                'name' => __( 'Sostenibilità' ),
+                'singular_name' => __( 'Sostenibilità' )
+            ),
+            'public' => true,
+            'has_archive' => true,
+			'menu_icon' => 'dashicons-buddicons-replies',
+            'rewrite' => array('slug' => 'sustainability'),
+            'show_in_rest' => true,
+			'menu_position' => 9,
+			'supports' => array( 
+				'title', 
+				'editor', 
+				'thumbnail', 
+				'custom-fields', 
+				'revisions',
+				'excerpt'
+			  )
+        )
+    );
+
+}
+add_action( 'init', 'create_sustainability_post_type' );
