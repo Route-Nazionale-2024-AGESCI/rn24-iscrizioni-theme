@@ -839,10 +839,12 @@ function get_coca_boxes( $data ) {
     register_rest_route( 'rn24/v1', '/boxes/', array(
       'methods' => 'GET',
       'callback' => 'get_coca_boxes',
+      'permission_callback' => '__return_true',
     ) );
     register_rest_route( 'rn24/v1', '/boxes/export', array(
         'methods' => 'GET',
         'callback' => 'get_coca_happines_export',
+        'permission_callback' => '__return_true',
       ) );
   } );
 
