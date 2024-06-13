@@ -661,55 +661,56 @@ function rn24_handle_coca_happy_form(){
         }
 
         if (get_current_user_id() < 1) {
-            $photo = $_FILES['tangram-photo'];
-        
-
-            $upload_url = '';
-            if ($photo['name']) {
-                $uploadedfile = array(
-                    'name'     => $photo['name'],
-                    'type'     => $photo['type'],
-                    'tmp_name' => $photo['tmp_name'],
-                    'error'    => $photo['error'],
-                    'size'     => $photo['size']
-                );
-                $upload_overrides = array( 'test_form' => false );
-                $movefile = wp_handle_upload( $uploadedfile, $upload_overrides );
-                if ( $movefile && !isset( $movefile['error'] ) ) {
-                    delete_user_meta(get_current_user_id(), '_happy_reel');
-                    add_user_meta(get_current_user_id(), '_happy_reel', $movefile["url"] );
-                    $upload_url = $movefile["url"];
-                }
-            }
-    
-            $happy_history = get_user_meta(get_current_user_id(), '_happy_history', true);
-            $happy_irrinunciabile = get_user_meta(get_current_user_id(), '_happy_irrinunciabile', true);
-    
-            delete_user_meta(get_current_user_id(), '_happy_history');
-            delete_user_meta(get_current_user_id(), '_happy_irrinunciabile');
-            add_user_meta(get_current_user_id(), '_happy_history', $_POST['happy_history']);
-            add_user_meta(get_current_user_id(), '_happy_irrinunciabile', $_POST['happy_irrinunciabile']);
-    
-            $currentUser = wp_get_current_user();
-            // Create post object
-            $azioneFelicita = array(
-            'post_title'    => $currentUser->display_name,
-            'post_content'  => $_POST['happy_history'],
-            'post_status'   => 'publish',
-            'post_author'   => get_current_user_id(),
-            'post_type' => 'azioni_felicita',
-            'meta_input'   => array(
-                'irrinunciabile' => $_POST['happy_irrinunciabile'],
-                'upload' => get_user_meta(get_current_user_id(), '_happy_reel', true)
-                )
-            );
-    
-            // Insert the post into the database
-            wp_insert_post( $azioneFelicita );
-        } else {
             wp_redirect($redirect_url.'?r24_coca_error');
             exit();
         }
+            
+        $photo = $_FILES['tangram-photo'];
+        
+
+        $upload_url = '';
+        if ($photo['name']) {
+            $uploadedfile = array(
+                'name'     => $photo['name'],
+                'type'     => $photo['type'],
+                'tmp_name' => $photo['tmp_name'],
+                'error'    => $photo['error'],
+                'size'     => $photo['size']
+            );
+            $upload_overrides = array( 'test_form' => false );
+            $movefile = wp_handle_upload( $uploadedfile, $upload_overrides );
+            if ( $movefile && !isset( $movefile['error'] ) ) {
+                delete_user_meta(get_current_user_id(), '_happy_reel');
+                add_user_meta(get_current_user_id(), '_happy_reel', $movefile["url"] );
+                $upload_url = $movefile["url"];
+            }
+        }
+
+        $happy_history = get_user_meta(get_current_user_id(), '_happy_history', true);
+        $happy_irrinunciabile = get_user_meta(get_current_user_id(), '_happy_irrinunciabile', true);
+
+        delete_user_meta(get_current_user_id(), '_happy_history');
+        delete_user_meta(get_current_user_id(), '_happy_irrinunciabile');
+        add_user_meta(get_current_user_id(), '_happy_history', $_POST['happy_history']);
+        add_user_meta(get_current_user_id(), '_happy_irrinunciabile', $_POST['happy_irrinunciabile']);
+
+        $currentUser = wp_get_current_user();
+        // Create post object
+        $azioneFelicita = array(
+        'post_title'    => $currentUser->display_name,
+        'post_content'  => $_POST['happy_history'],
+        'post_status'   => 'publish',
+        'post_author'   => get_current_user_id(),
+        'post_type' => 'azioni_felicita',
+        'meta_input'   => array(
+            'irrinunciabile' => $_POST['happy_irrinunciabile'],
+            'upload' => get_user_meta(get_current_user_id(), '_happy_reel', true)
+            )
+        );
+
+        // Insert the post into the database
+        wp_insert_post( $azioneFelicita );
+        
     } catch(Exception $e) {
         wp_redirect($redirect_url.'?r24_coca_error');
         exit();
