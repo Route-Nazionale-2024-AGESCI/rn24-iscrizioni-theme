@@ -126,7 +126,7 @@ function rn24_wp_login_form($args = array()) {
 		.
 		sprintf(
 			'<input type="hidden" name="redirect_to" value="%3$s" />
-       <button type="submit" name="wp-submit" id="%1$s" class="btn btn-primary" $disabled>%2$s</button>',
+       <button type="submit" name="wp-submit" id="%1$s" class="btn btn-primary">%2$s</button>',
 			esc_attr( $args['id_submit'] ),
 			esc_attr( $args['label_log_in'] ),
 			esc_url( $redirect_url )
@@ -488,13 +488,13 @@ add_action( 'init', 'create_rn24_faq_taxonomy');
                 </div>
             </div>
 
-            <div class="form-group" style="$hide">
+            <div class="form-group" style="">
                 <label for="box">In quale ambito si colloca l'orizzonte di felicità che sentite vi rappresenta tutti?</label>
                 <select required id="box" name="selected-box" class="w-100 form-control" style="width: 100%">
                 $box_opts
                 </select>
             </div>
-            <button type="submit" name="rn24-coca-sign-submit" class="btn btn-primary" $disabled>Conferma</button>
+            <button type="submit" name="rn24-coca-sign-submit" class="btn btn-primary">Conferma</button>
         </form>
         SIGNUPCOCAFORM;
 
