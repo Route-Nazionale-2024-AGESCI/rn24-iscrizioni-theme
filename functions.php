@@ -534,7 +534,7 @@ function _get_coca_azione_felicita_form() {
     } else {
         $signupform .= <<<SIGNUPCOCAHAPPYFORM
         <a class="input-group download-reel-btn" href="$happy_reel" target="_blank">
-            <button class="btn btn-secondary">Scarica</button>
+            <button class="btn btn-secondary"  type="button">Scarica</button>
         </a>
         SIGNUPCOCAHAPPYFORM;
     }
@@ -669,7 +669,7 @@ function rn24_handle_coca_happy_form(){
         
 
         $upload_url = '';
-        if ($photo['name']) {
+        if ($photo && $photo['name']) {
             $uploadedfile = array(
                 'name'     => $photo['name'],
                 'type'     => $photo['type'],
@@ -707,11 +707,10 @@ function rn24_handle_coca_happy_form(){
             'upload' => get_user_meta(get_current_user_id(), '_happy_reel', true)
             )
         );
-
         // Insert the post into the database
         wp_insert_post( $azioneFelicita );
-        
-    } catch(Exception $e) {
+    } catch(Exception | Error  $e) {
+		error_log($e->getMessage());
         wp_redirect($redirect_url.'?r24_coca_error');
         exit();
     }
@@ -956,3 +955,4 @@ function create_sustainability_post_type() {
 
 }
 add_action( 'init', 'create_sustainability_post_type' );
+
