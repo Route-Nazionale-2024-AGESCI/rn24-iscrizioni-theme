@@ -186,7 +186,7 @@ $(document).ready(function() {
                             success: function(groups){
                                 for (var i = 0; i < groups.length; i++) {
                                     var lig = $('<li></li>');
-                                    lig.data('gruppo', data[i].codice_gruppo);
+                                    lig.data('gruppo', groups[i].codice_gruppo);
                                     lig.append('<span class="region-zone">' + groups[i].denominazione + '</span>');
                                     $('.region-details ul.groups-list').append(lig);
                                 }

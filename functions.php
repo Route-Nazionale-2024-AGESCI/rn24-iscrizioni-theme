@@ -601,6 +601,7 @@ add_shortcode('rn24_coca_happy_form', 'rn24_coca_happy_form');
 
 
 function rn24_handle_coca_box_form(){
+
     if(!isset($_POST['rn24-coca-sign-submit'] ) )
         return;
     
@@ -640,7 +641,6 @@ function rn24_handle_coca_box_form(){
         wp_redirect($redirect_url.'?r24_coca_error');
         exit();
     }
-
     wp_redirect($redirect_url.'?r24_coca_success');
     exit();
 }
@@ -660,7 +660,7 @@ function rn24_handle_coca_happy_form(){
             require_once( ABSPATH . 'wp-admin/includes/file.php' );
         }
 
-        if (get_current_user_id() < 1) {
+        if (get_current_user_id() > 1) {
             $photo = $_FILES['tangram-photo'];
         
 
@@ -937,7 +937,7 @@ function create_sustainability_post_type() {
             'public' => true,
             'has_archive' => true,
 			'menu_icon' => 'dashicons-buddicons-replies',
-            'rewrite' => array('slug' => 'sustainability'),
+            'rewrite' => array('slug' => 'sostenibilita'),
             'show_in_rest' => true,
 			'menu_position' => 9,
 			'supports' => array( 
