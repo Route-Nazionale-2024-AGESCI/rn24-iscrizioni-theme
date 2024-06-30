@@ -1333,3 +1333,6 @@ p.sponsor-subtitle {
     text-align: left;
     margin: 40px 0 20px;
 }
+p.file-limit {
+    color: #9b0000;
+}

@@ -529,6 +529,9 @@ function _get_coca_azione_felicita_form() {
                 <input name="tangram-photo" type="file" class="custom-file-input" id="tangram-photo">
                 <label class="custom-file-label" for="tangram-photo">Seleziona</label>
             </div>
+
+            <p class="file-limit">La dimensione del file caricato non può superare 50MB.</p>
+
         </div>
         SIGNUPCOCAHAPPYFORM;
     } else {
@@ -536,6 +539,7 @@ function _get_coca_azione_felicita_form() {
         <a class="input-group download-reel-btn" href="$happy_reel" target="_blank">
             <button class="btn btn-secondary"  type="button">Scarica</button>
         </a>
+        <p class="file-limit">La dimensione del file caricato non può superare 50MB.</p>
         SIGNUPCOCAHAPPYFORM;
     }
     
