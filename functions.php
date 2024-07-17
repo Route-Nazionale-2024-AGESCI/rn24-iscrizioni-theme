@@ -853,6 +853,11 @@ function get_coca_boxes( $data ) {
         'callback' => 'get_coca_happines_export',
         'permission_callback' => '__return_true',
       ) );
+      register_rest_route( 'rn24/v1', '/azioni-felicita/export', array(
+        'methods' => 'GET',
+        'callback' => 'get_coca_azioni_felicita_export',
+        'permission_callback' => '__return_true',
+      ) );
   } );
 
   /**
@@ -896,6 +901,46 @@ function get_coca_happines_export( $data ) {
     // Output to browser with the CSV mime type
     header("Content-type: text/csv; charset=UTF-8");
     header("Content-Disposition: attachment; filename=rn24_felici_di_export.csv");
+    header("Content-Transfer-Encoding: UTF-8");
+    echo "\xEF\xBB\xBF"; // UTF-8 BOM
+    echo $out;
+  }
+
+
+
+  function get_coca_azioni_felicita_export( $data ) {
+    global $wpdb;    
+    
+    $sql = "SELECT u.user_login AS codice, u.display_name AS display_name, g.zona, g.regione,
+    (SELECT umb.meta_value FROM wp_postmeta umb WHERE  um.ID = umb.post_id and umb.meta_key = 'irrinunciabile') AS irrinunciabile,
+    (SELECT umb.meta_value FROM wp_postmeta umb WHERE  um.ID = umb.post_id and umb.meta_key = 'upload') AS upload,
+    um.post_content as 'azione_felicita'
+    FROM wp_posts um
+    LEFT JOIN wp_users u ON u.ID = um.post_author
+    LEFT JOIN rn24_gruppi g ON g.codice_gruppo = u.user_login
+    WHERE um.post_type = 'azioni_felicita' AND um.post_author <> 1
+    ORDER BY u.display_name";
+
+    $result = $wpdb->get_results($sql);
+
+    $out = '"Codice gruppo";"Gruppo";"Zona";"Regione";"Irrinunciabile";"Media";"Azione felicità";'."\r\n";
+
+    foreach ($result as &$value) {
+        //If the character " exists, then escape it, otherwise the csv file will be invalid.
+        $out .= '"'.$value->codice.'";';
+        $out .= '"'.$value->display_name.'";';
+        $out .= '"'.$value->zona.'";';
+        $out .= '"'.$value->regione.'";';
+        $out .= '"'. str_replace("\r\n", "", str_replace('"', '""', $value->irrinunciabile)) .'";';
+        $out .= '"'.$value->upload.'";';
+        $out .= '"'.str_replace("\r\n", "", str_replace('"', '""', $value->azione_felicita)).'"'."\r\n";
+    }
+
+    //var_dump($out);
+
+    // Output to browser with the CSV mime type
+    header("Content-type: text/csv; charset=UTF-8");
+    header("Content-Disposition: attachment; filename=rn24_azioni_felicita_export.csv");
     header("Content-Transfer-Encoding: UTF-8");
     echo "\xEF\xBB\xBF"; // UTF-8 BOM
     echo $out;
