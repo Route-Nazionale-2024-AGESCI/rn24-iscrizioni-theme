@@ -1315,7 +1315,7 @@ a.input-group.download-reel-btn {
     height: 180px;
     padding: 10px;
     cursor: pointer;
-    box-shadow: 0px 0px 8px #f0f0f0;
+    /*box-shadow: 0px 0px 8px #f0f0f0;*/
     border-radius: 3px;
 }
 .sponsor-logo:HOVER {
