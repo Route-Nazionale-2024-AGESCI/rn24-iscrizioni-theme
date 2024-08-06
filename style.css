@@ -1336,3 +1336,13 @@ p.sponsor-subtitle {
 p.file-limit {
     color: #9b0000;
 }
+
+p.receipt-header-description p {
+    color: white;
+}
+h1.receipt-header-heading p {
+    color: white !important;
+}
+aside.givewp-form-secure-badge {
+    display: none;
+}
