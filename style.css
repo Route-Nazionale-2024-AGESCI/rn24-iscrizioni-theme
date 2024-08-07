@@ -1346,3 +1346,8 @@ h1.receipt-header-heading p {
 aside.givewp-form-secure-badge {
     display: none;
 }
+
+.wp-block-column.arena24-altri-eventi {
+    padding: 20px;
+    border-radius: 6px;
+}
