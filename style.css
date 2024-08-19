@@ -1351,3 +1351,8 @@ aside.givewp-form-secure-badge {
     padding: 20px;
     border-radius: 6px;
 }
+.timeline-event-abstract.sustainability {
+    max-height: 90px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
