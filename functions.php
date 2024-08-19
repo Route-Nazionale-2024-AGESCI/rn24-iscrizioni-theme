@@ -858,6 +858,13 @@ function get_coca_boxes( $data ) {
         'callback' => 'get_coca_azioni_felicita_export',
         'permission_callback' => '__return_true',
       ) );
+
+      register_rest_route( 'rn24/v1', '/visitatori-arena24/export', array(
+        'methods' => 'GET',
+        'callback' => 'export_visitatori_arena24',
+        'permission_callback' => 'is_user_logged_in',
+      ) );
+      
   } );
 
   /**
@@ -1008,3 +1015,55 @@ function create_sustainability_post_type() {
 }
 add_action( 'init', 'create_sustainability_post_type' );
 
+
+
+
+function export_visitatori_arena24( $data ) {
+    global $wpdb;    
+    
+    $sql = "SELECT t.id, tt.title,
+(SELECT UPPER(dm.meta_value) FROM wp_give_donationmeta dm WHERE dm.donation_id = t.donation_id AND dm.meta_key = '_give_donor_billing_first_name') AS nome,
+(SELECT UPPER(dm.meta_value) FROM wp_give_donationmeta dm WHERE dm.donation_id = t.donation_id AND dm.meta_key = '_give_donor_billing_last_name') AS cognome,
+(SELECT LOWER(dm.meta_value) FROM wp_give_donationmeta dm WHERE dm.donation_id = t.donation_id AND dm.meta_key = '_give_payment_donor_email') AS email,
+(SELECT LOWER(dm.meta_value) FROM wp_give_donationmeta dm WHERE dm.donation_id = t.donation_id AND dm.meta_key = '_give_payment_donor_phone') AS telefono,
+(SELECT UPPER(dm.meta_value) FROM wp_give_donationmeta dm WHERE dm.donation_id = t.donation_id AND dm.meta_key = 'codice_fiscale_1') AS codice_fiscale,
+(SELECT UPPER(dm.meta_value) FROM wp_give_donationmeta dm WHERE dm.donation_id = t.donation_id AND dm.meta_key = 'data_di_nascita') AS data_nascita,
+(SELECT UPPER(dm.meta_value) FROM wp_give_donationmeta dm WHERE dm.donation_id = t.donation_id AND dm.meta_key = 'luogo_di_nascita') AS luogo_nascita,
+(SELECT UPPER(dm.meta_value) FROM wp_give_donationmeta dm WHERE dm.donation_id = t.donation_id AND dm.meta_key = 'campo_di_testo') AS provincia,
+(SELECT UPPER(dm.meta_value) FROM wp_give_donationmeta dm WHERE dm.donation_id = t.donation_id AND dm.meta_key = 'con_quale_mezzo_di_trasporto_arriverai_a_villa_buri') AS mezzo_trasporto,
+COUNT(*) AS numero_biglietti
+FROM wp_give_event_tickets t
+LEFT JOIN wp_give_event_ticket_types tt ON tt.id = t.ticket_type_id
+GROUP BY email
+ORDER BY tt.title desc
+";
+
+    $result = $wpdb->get_results($sql);
+
+    $out = '"ID";"Giorno";"Nome";"Cognome";"Email";"Telefono";"Codice Fiscale";"Data nascita";"Luogo nascita";"Provincia";"Mezzo trasporto";"Num. biglietti";'."\r\n";
+
+    foreach ($result as &$value) {
+        //If the character " exists, then escape it, otherwise the csv file will be invalid.
+        $out .= '"'.$value->id.'";';
+        $out .= '"'.$value->title.'";';
+        $out .= '"'.$value->nome.'";';
+        $out .= '"'.$value->cognome.'";';
+        $out .= '"'.$value->email.'";';
+        $out .= '"'.$value->telefono.'";';
+        $out .= '"'.$value->codice_fiscale.'";';
+        $out .= '"'.$value->data_nascita.'";';
+        $out .= '"'.$value->luogo_nascita.'";';
+        $out .= '"'.$value->provincia.'";';
+        $out .= '"'.$value->mezzo_trasporto.'";';
+        $out .= '"'.str_replace("\r\n", "", str_replace('"', '""', $value->numero_biglietti)).'"'."\r\n";
+    }
+
+    //var_dump($out);
+
+    // Output to browser with the CSV mime type
+    header("Content-type: text/csv; charset=UTF-8");
+    header("Content-Disposition: attachment; filename=visitatori_arena24.csv");
+    header("Content-Transfer-Encoding: UTF-8");
+    echo "\xEF\xBB\xBF"; // UTF-8 BOM
+    echo $out;
+  }
