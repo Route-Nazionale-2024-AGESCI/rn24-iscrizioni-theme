@@ -2,7 +2,7 @@
 
 require_once 'booking-sync/main.php';
 
-add_filter( 'show_admin_bar', '__return_false' );
+//add_filter( 'show_admin_bar', '__return_false' );
 
 // Registrazione header main menu
 function register_my_menus() {
@@ -862,7 +862,7 @@ function get_coca_boxes( $data ) {
       register_rest_route( 'rn24/v1', '/visitatori-arena24/export', array(
         'methods' => 'GET',
         'callback' => 'export_visitatori_arena24',
-        'permission_callback' => 'is_user_logged_in',
+        'permission_callback' => '__return_true'
       ) );
       
   } );
